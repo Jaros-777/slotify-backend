@@ -1,15 +1,9 @@
 package com.example.slotify_backend.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@NoArgsConstructor
-@Getter
-@Setter
-@AllArgsConstructor
-public class UserRequestLoginDTO {
-    private String email;
-    private String password;
-}
+public record UserRequestLoginDTO (
+        @NotBlank @Email String email,
+        @NotBlank String password
+){}
