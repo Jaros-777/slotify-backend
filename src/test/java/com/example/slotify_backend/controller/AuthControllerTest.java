@@ -64,7 +64,7 @@ class AuthControllerTest {
 
 
     @Test
-    void addUserSuccess() throws Exception {
+    void addNewUserSuccess() throws Exception {
 
         String requestBody = objectMapper.writeValueAsString(newUser);
 
@@ -77,7 +77,7 @@ class AuthControllerTest {
 
     }
     @Test
-    void addUserFailedUserAlreadyExist() throws Exception {
+    void addNewUserFailedUserAlreadyExist() throws Exception {
         userRepository.save(newUser);
 
         String requestBody = objectMapper.writeValueAsString(newUser);
