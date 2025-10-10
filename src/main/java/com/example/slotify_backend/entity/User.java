@@ -2,9 +2,11 @@ package com.example.slotify_backend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Role;
 
 @Entity
 @Getter
@@ -22,12 +24,14 @@ public class User {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
     private String role;
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
 }

@@ -7,8 +7,9 @@ public record UserRequestRegisterDTO (
     @NotBlank
      String name,
     @NotBlank
-     String password,
-    @NotBlank
     @Email
-     String email
+    String email,
+    @NotBlank
+     String password
+
 ){}

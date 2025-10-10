@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -22,9 +22,14 @@ public class AuthController {
     }
 
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return authService.getAllUsers();
+    @GetMapping("/test")
+    public String testAPI() {
+        return "Hello World";
+    }
+
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return authService.getUsers();
     }
 
     @PostMapping("/register")

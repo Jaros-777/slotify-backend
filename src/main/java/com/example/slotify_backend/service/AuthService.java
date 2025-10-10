@@ -46,15 +46,17 @@ public class AuthService implements UserDetailsService {
     private final JwtService jwtService;
 
 
-    public List<User> getAllUsers() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
+
 
     public void addUser(UserRequestRegisterDTO dto) {
         if(userRepository.existsByEmail(dto.email())) {
             throw new UserAlreadyExistException("User already exists");
         }
-        userRepository.save(new User(dto.name(), passwordEncoder.encode(dto.password()), dto.email()));
+            userRepository.save(new User(dto.name(), dto.email(), passwordEncoder.encode(dto.password()), "USER_COMPANY"));
+
     }
 
     public TokenRespone login (@Valid @RequestBody UserRequestLoginDTO dto) {
