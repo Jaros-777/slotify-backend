@@ -3,13 +3,11 @@ package com.example.slotify_backend.controller;
 import com.example.slotify_backend.dto.TokenRespone;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.UserRequestRegisterDTO;
-import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,16 +20,6 @@ public class AuthController {
     }
 
 
-    @GetMapping("/test")
-    public String testAPI() {
-        return "Hello World";
-    }
-
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return authService.getUsers();
-    }
-
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@Valid @RequestBody UserRequestRegisterDTO userRequestRegisterDTO) {
@@ -43,4 +31,8 @@ public class AuthController {
     public TokenRespone loginUser(@Valid @RequestBody UserRequestLoginDTO dto) {
        return authService.login(dto);
     }
+
+    @GetMapping("/validate")
+    @ResponseStatus(HttpStatus.OK)
+    public void validateUser() {}
 }

@@ -4,7 +4,9 @@ package com.example.slotify_backend.controller;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.repository.UserRepository;
+import com.example.slotify_backend.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,6 +35,8 @@ class AuthControllerTest {
     private ObjectMapper objectMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtService jwtService;
 
     private User newUser;
     private final String rawPassword = "text";
@@ -44,6 +50,7 @@ class AuthControllerTest {
                 passwordEncoder.encode(rawPassword),
                 "USER_COMPANY"
         );
+
     }
 
 
@@ -60,6 +67,7 @@ class AuthControllerTest {
                 .andExpect(status().isCreated());
 
     }
+
     @Test
     void addNewUserFailedUserAlreadyExist() throws Exception {
         userRepository.save(newUser);
@@ -74,6 +82,7 @@ class AuthControllerTest {
                 .andExpect(status().isConflict());
 
     }
+
     @Test
     void loginSuccesful() throws Exception {
         userRepository.save(newUser);
@@ -91,6 +100,7 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.token").isNotEmpty());
 
     }
+
     @Test
     void loginFailedUserNotFound() throws Exception {
 
@@ -106,6 +116,7 @@ class AuthControllerTest {
                 .andExpect(status().isForbidden());
 
     }
+
     @Test
     void loginFailedWrongPassword() throws Exception {
         userRepository.save(newUser);
@@ -122,5 +133,56 @@ class AuthControllerTest {
                 .andExpect(status().isForbidden());
 
     }
+
+    @Test
+    void validateUserSuccess() throws Exception {
+        userRepository.save(newUser);
+        UserRequestLoginDTO dto = new UserRequestLoginDTO(newUser.getEmail(), rawPassword);
+        String requestBody = objectMapper.writeValueAsString(dto);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.token").isNotEmpty())
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+        String token = objectMapper.readTree(responseBody).get("token").asText();
+        mockMvc.perform(MockMvcRequestBuilders
+                    .get("/auth/validate")
+                    .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+
+    }
+    @Test
+    void validateUserFailed() throws Exception {
+
+        userRepository.save(newUser);
+
+
+        UserRequestLoginDTO dto = new UserRequestLoginDTO(newUser.getEmail(), rawPassword);
+        String requestBody = objectMapper.writeValueAsString(dto);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.token").isNotEmpty())
+                .andReturn();
+
+        String token = objectMapper.readTree(result.getResponse().getContentAsString()).get("token").asText();
+
+        String badToken = token.substring(0, token.length() - 1) + "X";
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/auth/validate")
+                        .header("Authorization", "Bearer " + badToken))
+                .andExpect(status().isForbidden());
+
+    }
+
 
 }

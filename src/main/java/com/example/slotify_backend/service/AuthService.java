@@ -19,8 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
@@ -46,9 +44,6 @@ public class AuthService implements UserDetailsService {
     private final JwtService jwtService;
 
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
 
 
     public void addUser(UserRequestRegisterDTO dto) {
@@ -66,4 +61,5 @@ public class AuthService implements UserDetailsService {
         String token = jwtService.generateToken(user.getEmail());
         return new TokenRespone(token);
     }
+
 }
