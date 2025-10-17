@@ -1,6 +1,6 @@
 package com.example.slotify_backend.controller;
 
-import com.example.slotify_backend.dto.TokenRespone;
+import com.example.slotify_backend.dto.TokenResponeDTO;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.UserRequestRegisterDTO;
 import com.example.slotify_backend.service.AuthService;
@@ -28,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public TokenRespone loginUser(@Valid @RequestBody UserRequestLoginDTO dto) {
+    public TokenResponeDTO loginUser(@Valid @RequestBody UserRequestLoginDTO dto) {
        return authService.login(dto);
     }
 

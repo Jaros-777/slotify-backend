@@ -1,6 +1,6 @@
 package com.example.slotify_backend.service;
 
-import com.example.slotify_backend.dto.TokenRespone;
+import com.example.slotify_backend.dto.TokenResponeDTO;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.UserRequestRegisterDTO;
 import com.example.slotify_backend.entity.User;
@@ -54,12 +54,12 @@ public class AuthService implements UserDetailsService {
 
     }
 
-    public TokenRespone login (@Valid @RequestBody UserRequestLoginDTO dto) {
+    public TokenResponeDTO login (@Valid @RequestBody UserRequestLoginDTO dto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
         User user = userRepository.findByEmail(dto.email())
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
         String token = jwtService.generateToken(user.getEmail());
-        return new TokenRespone(token);
+        return new TokenResponeDTO(token);
     }
 
 }
