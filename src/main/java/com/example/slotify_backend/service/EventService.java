@@ -15,8 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
 
-    EventRepository eventRepository;
-    EventMapper eventMapper;
+    private final EventRepository eventRepository;
+    private final EventMapper eventMapper;
 
     public List<EventDTO> getAllUserEventsInWeek(Long id,LocalDateTime startWeek){
         LocalDateTime endDate = startWeek.plusDays(6).plusHours(23).plusMinutes(59).plusSeconds(59);

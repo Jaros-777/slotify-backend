@@ -38,6 +38,7 @@ public class EventController {
     }
 
     @PutMapping("/update")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEvent(@Valid @RequestBody EventDTO dto) {
         eventService.updateEvent(dto);
     }

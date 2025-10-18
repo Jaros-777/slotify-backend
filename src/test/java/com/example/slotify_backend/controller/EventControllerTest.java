@@ -2,10 +2,13 @@ package com.example.slotify_backend.controller;
 
 import com.example.slotify_backend.dto.EventCreateDTO;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
+import com.example.slotify_backend.entity.Client;
+import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import com.example.slotify_backend.entity.enums.Role;
 import com.example.slotify_backend.mapper.EventMapper;
+import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EnumType;
@@ -27,6 +30,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,10 +47,13 @@ class EventControllerTest {
     private MvcResult userToken;
 
     private User user;
+    private Client client;
     private PasswordEncoder encoder;
     private ObjectMapper objectMapper;
     private UserRepository userRepository;
     private EventMapper eventMapper;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -55,8 +63,11 @@ class EventControllerTest {
                 encoder.encode("password"),
                 Role.USER_COMPANY
         );
+        List<Event> events = new ArrayList<>();
+        client = new Client("client");
 
         userRepository.save(user);
+        clientRepository.save(client);
 
         UserRequestLoginDTO dto = new UserRequestLoginDTO(user.getEmail(), "password");
 
@@ -76,9 +87,8 @@ class EventControllerTest {
 //    void addNewEventSuccess() throws Exception {
 //            EventCreateDTO dto = new EventCreateDTO(
 //                    user.getId(),
-//                    user.getName(),
-//                    user.getEmail(),
-//                    user.getPhone
+//                    client.getId(),
+//                    1,
 //            );
 //        @NotNull
 //        Long ownerId,

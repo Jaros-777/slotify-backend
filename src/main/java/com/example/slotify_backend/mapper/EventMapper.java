@@ -4,21 +4,20 @@ import com.example.slotify_backend.dto.EventCreateDTO;
 import com.example.slotify_backend.dto.EventDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
-import com.example.slotify_backend.entity.User;
-import com.example.slotify_backend.entity.Service;
+import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
-import com.example.slotify_backend.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Component
 public class EventMapper {
 
-    private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
     private final ClientRepository clientRepository;
 
@@ -27,7 +26,7 @@ public class EventMapper {
                 event.getId(),
                 event.getOwner().getId(),
                 event.getClient().getId(),
-                event.getService().getId(),
+                event.getServiceEntity().getId(),
                 event.getStartDate(),
                 event.getEndDate(),
                 event.getBookingStatus(),
@@ -40,13 +39,11 @@ public class EventMapper {
     }
 
     public Event toEntity(EventCreateDTO dto) {
-        User owner = userRepository.findById(dto.ownerId()).orElse(null);
         Client client = clientRepository.findById(dto.clientId()).orElse(null);
-        Service service = (Service) serviceRepository.findById(dto.serviceId()).orElse(null);
+        ServiceEntity serviceEntity =serviceRepository.findById(dto.serviceId()).orElse(null);
         return new Event(
-                owner,
                 client,
-                service,
+                serviceEntity,
                 dto.startDate(),
                 dto.endDate(),
                 dto.bookingStatus(),
@@ -61,8 +58,8 @@ public class EventMapper {
         }
 
         if (dto.serviceId() != null) {
-            Service service = (Service) serviceRepository.findById(dto.serviceId()).orElse(null);
-            event.setService(service);
+            ServiceEntity serviceEntity = serviceRepository.findById(dto.serviceId()).orElse(null);
+            event.setServiceEntity(serviceEntity);
         }
 
         if (dto.startDate() != null) event.setStartDate(dto.startDate());

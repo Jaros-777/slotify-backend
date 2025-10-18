@@ -2,8 +2,6 @@ package com.example.slotify_backend.entity;
 
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +28,7 @@ public class Event {
     Client client;
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private ServiceEntity serviceEntity;
     @NotNull
     private LocalDateTime startDate;
     @NotNull
@@ -40,10 +38,9 @@ public class Event {
     private BookingStatus bookingStatus;
     private String description;
 
-    public Event(User owner, Client client, Service service, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
-        this.owner = owner;
+    public Event(Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
         this.client = client;
-        this.service = service;
+        this.serviceEntity = serviceEntity;
         this.startDate = startDate;
         this.endDate = endDate;
         this.bookingStatus = bookingStatus;

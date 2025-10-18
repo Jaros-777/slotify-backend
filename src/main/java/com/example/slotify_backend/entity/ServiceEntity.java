@@ -9,23 +9,31 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "clients")
+@Table(name ="services")
 @NoArgsConstructor
-public class Client {
+public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
     @NotBlank
     private String name;
-    private String email;
-    private Integer phone;
-
+    @NotBlank
+    Integer price;
+    @NotBlank
+    Integer duration;
     @OneToMany
-    private List<Event> events = new ArrayList<>();
-    public Client(String name) {
+    List<Event> events = new ArrayList<>();
+
+    public ServiceEntity(User owner, String name, Integer price, Integer duration) {
+        this.owner = owner;
         this.name = name;
+        this.price = price;
+        this.duration = duration;
     }
 }
