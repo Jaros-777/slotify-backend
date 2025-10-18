@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,11 +25,9 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
-    @NotBlank
-    private String name;
-    @Email
-    private String email;
-    private Integer phone;
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    Client client;
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
@@ -41,11 +40,9 @@ public class Event {
     private BookingStatus bookingStatus;
     private String description;
 
-    public Event(User owner, String name, String email, Integer phone, Service service, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
+    public Event(User owner, Client client, Service service, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
         this.owner = owner;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+        this.client = client;
         this.service = service;
         this.startDate = startDate;
         this.endDate = endDate;

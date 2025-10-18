@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -24,7 +27,10 @@ public class User {
     @NotBlank
     private String password;
     @NotBlank
+    @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany
+    List<Event> events = new ArrayList<>();
 
     public User(String name, String email, String password, Role role) {
         this.name = name;

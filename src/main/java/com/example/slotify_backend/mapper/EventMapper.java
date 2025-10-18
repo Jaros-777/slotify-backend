@@ -2,9 +2,11 @@ package com.example.slotify_backend.mapper;
 
 import com.example.slotify_backend.dto.EventCreateDTO;
 import com.example.slotify_backend.dto.EventDTO;
+import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.entity.Service;
+import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import com.example.slotify_backend.repository.UserRepository;
 
@@ -18,14 +20,13 @@ public class EventMapper {
 
     private final UserRepository userRepository;
     private final ServiceRepository serviceRepository;
+    private final ClientRepository clientRepository;
 
     public EventDTO toDTO(Event event) {
         return new EventDTO(
                 event.getId(),
                 event.getOwner().getId(),
-                event.getName(),
-                event.getEmail(),
-                event.getPhone(),
+                event.getClient().getId(),
                 event.getService().getId(),
                 event.getStartDate(),
                 event.getEndDate(),
@@ -40,12 +41,11 @@ public class EventMapper {
 
     public Event toEntity(EventCreateDTO dto) {
         User owner = userRepository.findById(dto.ownerId()).orElse(null);
+        Client client = clientRepository.findById(dto.clientId()).orElse(null);
         Service service = (Service) serviceRepository.findById(dto.serviceId()).orElse(null);
         return new Event(
                 owner,
-                dto.name(),
-                dto.email(),
-                dto.phone(),
+                client,
                 service,
                 dto.startDate(),
                 dto.endDate(),
@@ -55,9 +55,10 @@ public class EventMapper {
     }
 
     public void updateEntity(EventDTO dto, Event event) {
-        if (dto.name() != null) event.setName(dto.name());
-        if (dto.email() != null) event.setEmail(dto.email());
-        if (dto.phone() != null) event.setPhone(dto.phone());
+        if (dto.clientId() != null) {
+            Client client =  clientRepository.findById(dto.clientId()).orElse(null);
+            event.setClient(client);
+        }
 
         if (dto.serviceId() != null) {
             Service service = (Service) serviceRepository.findById(dto.serviceId()).orElse(null);
@@ -69,4 +70,5 @@ public class EventMapper {
         if (dto.bookingStatus() != null) event.setBookingStatus(dto.bookingStatus());
         if (dto.description() != null) event.setDescription(dto.description());
     }
+
 }

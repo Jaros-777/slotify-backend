@@ -14,10 +14,7 @@ public record EventDTO(
         @NotNull
         Long ownerId,
         @NotBlank
-        String name,
-        @Email
-        String email,
-        Integer phone,
+        Long clientId,
         Long serviceId,
         @NotNull
         LocalDateTime startDate,
