@@ -1,5 +1,6 @@
 package com.example.slotify_backend.entity;
 
+import com.example.slotify_backend.entity.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -23,9 +24,9 @@ public class User {
     @NotBlank
     private String password;
     @NotBlank
-    private String role;
+    private Role role;
 
-    public User(String name, String email, String password, String role) {
+    public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;

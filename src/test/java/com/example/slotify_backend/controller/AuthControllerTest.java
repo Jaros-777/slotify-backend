@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static com.example.slotify_backend.entity.enums.Role.USER_COMPANY;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +49,7 @@ class AuthControllerTest {
                 "test",
                 "test@example.com",
                 passwordEncoder.encode(rawPassword),
-                "USER_COMPANY"
+                USER_COMPANY
         );
 
     }

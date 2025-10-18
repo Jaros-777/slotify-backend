@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import static com.example.slotify_backend.entity.enums.Role.USER_COMPANY;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
@@ -31,7 +33,7 @@ public class AuthService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
-                .roles(user.getRole())
+                .roles(user.getRole().toString())
                 .build();
 
     }
@@ -50,7 +52,7 @@ public class AuthService implements UserDetailsService {
         if(userRepository.existsByEmail(dto.email())) {
             throw new UserAlreadyExistException("User already exists");
         }
-            userRepository.save(new User(dto.name(), dto.email(), passwordEncoder.encode(dto.password()), "USER_COMPANY"));
+            userRepository.save(new User(dto.name(), dto.email(), passwordEncoder.encode(dto.password()), USER_COMPANY));
 
     }
 
