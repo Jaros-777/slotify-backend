@@ -8,6 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name ="services")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

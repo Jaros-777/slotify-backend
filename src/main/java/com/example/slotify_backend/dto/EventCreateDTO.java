@@ -8,9 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public record EventDTO(
-        @NotNull
-        Long id,
+public record EventCreateDTO(
         @NotNull
         Long ownerId,
         @NotBlank
