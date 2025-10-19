@@ -27,4 +27,16 @@ public class ServiceController {
     public void createNewService(@Valid @RequestBody ServiceCreateDTO dto) {
         serviceService.createNewService(dto);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteService(@RequestParam Long serviceId) {
+        serviceService.deleteServiceById(serviceId);
+    }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateService(@Valid @RequestBody ServiceDTO dto) {
+         serviceService.updateServiceById(dto);
+    }
 }

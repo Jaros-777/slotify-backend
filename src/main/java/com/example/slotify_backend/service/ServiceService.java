@@ -24,4 +24,15 @@ public class ServiceService {
     public void createNewService(ServiceCreateDTO dto) {
         serviceRepository.save(serviceMapper.toEntity(dto));
     }
+
+    public void deleteServiceById(Long serviceId) {
+        serviceRepository.deleteById(serviceId);
+    }
+
+    public void updateServiceById(ServiceDTO dto) {
+        serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
+            serviceMapper.updateDTO(dto, serviceEntity);
+            serviceRepository.save(serviceEntity);
+        });
+    };
 }
