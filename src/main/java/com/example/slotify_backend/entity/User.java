@@ -3,6 +3,8 @@ package com.example.slotify_backend.entity;
 import com.example.slotify_backend.entity.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +28,7 @@ public class User {
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany

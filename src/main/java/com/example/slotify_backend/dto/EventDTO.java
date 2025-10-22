@@ -12,7 +12,7 @@ public record EventDTO(
         @NotNull
         Long id,
         @NotNull
-        Long ownerId,
+        Long userId,
         @NotBlank
         Long clientId,
         Long serviceId,

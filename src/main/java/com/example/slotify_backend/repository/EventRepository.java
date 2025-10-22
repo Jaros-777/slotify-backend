@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    List<Event> findAllByOwnerIdAndStartDateBetween(Long ownerId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Event> findAllByUserIdAndStartDateBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 }

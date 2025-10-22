@@ -19,7 +19,7 @@ public class ServiceMapper {
     private final UserRepository userRepository;
 
     public ServiceEntity toEntity(ServiceCreateDTO dto) {
-        User user = userRepository.findById(dto.ownerId()).orElse(null);
+        User user = userRepository.findById(dto.userId()).orElse(null);
         return  new ServiceEntity(
                 user,
                 dto.name(),
@@ -31,7 +31,7 @@ public class ServiceMapper {
     public ServiceDTO toDTO(ServiceEntity entity) {
         return new ServiceDTO(
                 entity.getId(),
-                entity.getOwner().getId(),
+                entity.getUser().getId(),
                 entity.getName(),
                 entity.getPrice(),
                 entity.getDuration()
@@ -45,7 +45,7 @@ public class ServiceMapper {
     public void updateDTO(ServiceDTO dto, ServiceEntity entity) {
         if (dto.userId() != null) {
             User user =  userRepository.findById(dto.userId()).orElse(null);
-            entity.setOwner(user);
+            entity.setUser(user);
         }
 
         if (dto.name() != null) entity.setName(dto.name());

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public record EventCreateDTO(
         @NotNull
-        Long ownerId,
+        Long userId,
         @NotNull
         Long clientId,
         Long serviceId,

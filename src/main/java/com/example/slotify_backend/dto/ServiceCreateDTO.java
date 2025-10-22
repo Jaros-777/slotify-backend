@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ServiceCreateDTO(
         @NotNull
-       Long ownerId,
+       Long userId,
        @NotBlank
        String name,
        @NotNull

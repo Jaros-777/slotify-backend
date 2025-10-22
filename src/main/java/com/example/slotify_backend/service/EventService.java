@@ -20,7 +20,7 @@ public class EventService {
 
     public List<EventDTO> getAllUserEventsInWeek(Long id,LocalDateTime startWeek){
         LocalDateTime endDate = startWeek.plusDays(6).plusHours(23).plusMinutes(59).plusSeconds(59);
-        List<Event> events = eventRepository.findAllByOwnerIdAndStartDateBetween(id,startWeek,endDate);
+        List<Event> events = eventRepository.findAllByUserIdAndStartDateBetween(id,startWeek,endDate);
 
         return eventMapper.toDTO(events);
     }

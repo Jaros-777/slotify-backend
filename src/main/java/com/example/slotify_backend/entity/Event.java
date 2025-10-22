@@ -21,8 +21,8 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     Client client;
@@ -38,7 +38,8 @@ public class Event {
     private BookingStatus bookingStatus;
     private String description;
 
-    public Event(Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
+    public Event(User user, Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
+        this.user = user;
         this.client = client;
         this.serviceEntity = serviceEntity;
         this.startDate = startDate;
