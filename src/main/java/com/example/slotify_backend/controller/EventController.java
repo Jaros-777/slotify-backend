@@ -3,6 +3,8 @@ package com.example.slotify_backend.controller;
 import com.example.slotify_backend.dto.EventCreateDTO;
 import com.example.slotify_backend.dto.AllUserEventsInWeekDTO;
 import com.example.slotify_backend.dto.EventDTO;
+import com.example.slotify_backend.entity.Client;
+import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +29,8 @@ public class EventController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewEvent(@Valid @RequestBody EventCreateDTO dto) {
-        eventService.createNewEvent(dto);
+    public void createNewEvent(@Valid @RequestBody EventCreateDTO dto,@RequestHeader("Authorization") String authHeader) {
+        eventService.createNewEvent(dto, authHeader);
     }
 
     @DeleteMapping("/{id}")

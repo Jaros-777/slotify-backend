@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -17,12 +18,15 @@ public record EventDTO(
         Long clientId,
         Long serviceId,
         @NotNull
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         LocalDateTime startDate,
         @NotNull
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         LocalDateTime endDate,
         @NotNull
         @Enumerated(EnumType.STRING)
         BookingStatus bookingStatus,
         String description
-) {}
+) {
+}
 

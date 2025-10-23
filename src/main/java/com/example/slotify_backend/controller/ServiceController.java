@@ -18,8 +18,8 @@ public class ServiceController {
     ServiceService serviceService;
 
     @GetMapping
-    public List<ServiceDTO> getAllServicesByUser(@RequestParam Long userId){
-       return serviceService.getAllServicesByUser(userId);
+    public List<ServiceDTO> getAllServicesByUser(@RequestHeader("Authorization") String authHeader){
+       return serviceService.getAllServicesByUser(authHeader);
     };
 
     @PostMapping

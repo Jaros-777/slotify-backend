@@ -3,8 +3,10 @@ package com.example.slotify_backend.service;
 import com.example.slotify_backend.dto.TokenResponeDTO;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.UserRequestRegisterDTO;
+import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.exception.UserAlreadyExistException;
+import com.example.slotify_backend.repository.ServiceRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +46,7 @@ public class AuthService implements UserDetailsService {
     @Lazy
     private AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final ServiceRepository serviceRepository;
 
 
 
@@ -52,7 +55,17 @@ public class AuthService implements UserDetailsService {
         if(userRepository.existsByEmail(dto.email())) {
             throw new UserAlreadyExistException("User already exists");
         }
-            userRepository.save(new User(dto.name(), dto.email(), passwordEncoder.encode(dto.password()), USER_COMPANY));
+        User user = new User(
+                dto.name(), dto.email(), passwordEncoder.encode(dto.password()), USER_COMPANY
+        );
+            userRepository.save(user);
+        ServiceEntity serviceEntity = new ServiceEntity(
+                user,
+                "Not assigned",
+                0,
+                900//15min
+        );
+        serviceRepository.save(serviceEntity);
 
     }
 
@@ -60,7 +73,7 @@ public class AuthService implements UserDetailsService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.email(), dto.password()));
         User user = userRepository.findByEmail(dto.email())
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user.getEmail(), user.getId());
         return new TokenResponeDTO(token);
     }
 

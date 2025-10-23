@@ -36,6 +36,8 @@ public class AuthSecurity {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/validate").authenticated()
+                        .requestMatchers("/events/**").authenticated()
+                        .requestMatchers("/service/**").authenticated()
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
                         .anyRequest().authenticated()
                 )

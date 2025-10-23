@@ -22,9 +22,16 @@ public class Client {
     private String name;
     private String email;
     private Integer phone;
-
     @OneToMany
     private List<Event> events = new ArrayList<>();
+
+    public Client(String name, String email, Integer phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
+
     public Client(String name) {
         this.name = name;
     }

@@ -2,8 +2,10 @@ package com.example.slotify_backend.service;
 
 import com.example.slotify_backend.dto.EventCreateDTO;
 import com.example.slotify_backend.dto.EventDTO;
+import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.mapper.EventMapper;
+import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final JwtService jwtService;
+    private final ClientRepository clientRepository;
 
     public List<EventDTO> getAllUserEventsInWeek(Long id,LocalDateTime startWeek){
         LocalDateTime endDate = startWeek.plusDays(6).plusHours(23).plusMinutes(59).plusSeconds(59);
@@ -25,8 +29,21 @@ public class EventService {
         return eventMapper.toDTO(events);
     }
 
-    public void createNewEvent(EventCreateDTO dto) {
-        eventRepository.save(eventMapper.toEntity(dto));
+    public void createNewEvent(EventCreateDTO dto,String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+        Long clientId = dto.clientId();
+        if(dto.clientId() == null){
+            Client client = new Client(
+                    dto.clientName(),
+                    dto.email(),
+                    dto.phone()
+            );
+            clientRepository.save(client);
+            clientId = clientRepository.findByEmail(dto.email()).getId();
+        }
+
+        eventRepository.save(eventMapper.toEntity(dto,userId, clientId));
     };
 
     public void deleteEvent(Long id) {

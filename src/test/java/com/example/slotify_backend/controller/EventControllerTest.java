@@ -106,8 +106,10 @@ class EventControllerTest {
 
         EventCreateDTO dto = new EventCreateDTO(
                 user.getId(),
-                client.getId(),
                 service1.getId(),
+                "Client name",
+                "client@email.com",
+                123123123,
                 now,
                 end,
                 status,
