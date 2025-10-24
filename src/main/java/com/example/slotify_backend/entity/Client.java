@@ -20,19 +20,20 @@ public class Client {
     private Long id;
     @NotBlank
     private String name;
+    @NotBlank
     private String email;
     private Integer phone;
     @OneToMany
     private List<Event> events = new ArrayList<>();
 
-    public Client(String name, String email, Integer phone) {
+    public Client(String name, String email) {
         this.name = name;
         this.email = email;
-        this.phone = phone;
     }
 
 
     public Client(String name) {
         this.name = name;
     }
+
 }

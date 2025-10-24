@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public record EventDTO(
         @NotNull
         Long id,
-        @NotNull
-        Long userId,
         @NotBlank
-        Long clientId,
+        String clientName,
+        @Email
+        String clientEmail,
+        Integer clientPhone,
         Long serviceId,
         @NotNull
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

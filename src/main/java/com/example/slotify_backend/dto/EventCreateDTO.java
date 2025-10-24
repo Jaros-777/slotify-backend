@@ -15,8 +15,8 @@ public record EventCreateDTO(
         @NotBlank
         String clientName,
         @NotBlank
-        String email,
-        Integer phone,
+        String clientEmail,
+        Integer clientPhone,
         @NotNull
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         LocalDateTime startDate,

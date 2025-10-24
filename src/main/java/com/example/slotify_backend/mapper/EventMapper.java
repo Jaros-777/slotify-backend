@@ -10,6 +10,7 @@ import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 
 import com.example.slotify_backend.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +28,9 @@ public class EventMapper {
     public EventDTO toDTO(Event event) {
         return new EventDTO(
                 event.getId(),
-                event.getUser().getId(),
-                event.getClient().getId(),
+                event.getClient().getName(),
+                event.getClient().getEmail(),
+                event.getClient().getPhone(),
                 event.getServiceEntity().getId(),
                 event.getStartDate(),
                 event.getEndDate(),
@@ -58,8 +60,11 @@ public class EventMapper {
     }
 
     public void updateEntity(EventDTO dto, Event event) {
-        if (dto.clientId() != null) {
-            Client client =  clientRepository.findById(dto.clientId()).orElse(null);
+        if (dto.clientEmail() != null) {
+            Client client =  clientRepository.findByEmail(dto.clientEmail());
+            if (client == null) {
+                throw new EntityNotFoundException("Client with email " + dto.clientEmail() + " not found");
+            }
             event.setClient(client);
         }
 

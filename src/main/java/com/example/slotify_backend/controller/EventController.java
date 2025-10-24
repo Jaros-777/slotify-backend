@@ -22,9 +22,9 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping
-    public List<EventDTO> getAllUserEventsInWeek(@RequestParam Long id, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startWeek) {
-        return eventService.getAllUserEventsInWeek(id,startWeek);
+    @GetMapping("/{startWeek}")
+    public List<EventDTO> getAllUserEventsInWeek(@RequestHeader("Authorization") String authHeader, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startWeek) {
+        return eventService.getAllUserEventsInWeek(authHeader,startWeek);
     }
 
     @PostMapping

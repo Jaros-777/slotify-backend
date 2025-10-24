@@ -22,9 +22,12 @@ public class EventService {
     private final JwtService jwtService;
     private final ClientRepository clientRepository;
 
-    public List<EventDTO> getAllUserEventsInWeek(Long id,LocalDateTime startWeek){
+    public List<EventDTO> getAllUserEventsInWeek(String authHeader,LocalDateTime startWeek){
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+
         LocalDateTime endDate = startWeek.plusDays(6).plusHours(23).plusMinutes(59).plusSeconds(59);
-        List<Event> events = eventRepository.findAllByUserIdAndStartDateBetween(id,startWeek,endDate);
+        List<Event> events = eventRepository.findAllByUserIdAndStartDateBetween(userId,startWeek,endDate);
 
         return eventMapper.toDTO(events);
     }
@@ -32,17 +35,20 @@ public class EventService {
     public void createNewEvent(EventCreateDTO dto,String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
+
         Long clientId = dto.clientId();
+
         if(dto.clientId() == null){
             Client client = new Client(
                     dto.clientName(),
-                    dto.email(),
-                    dto.phone()
+                    dto.clientEmail()
             );
+            if(dto.clientPhone() != null){
+                client.setPhone(dto.clientPhone());
+            }
             clientRepository.save(client);
-            clientId = clientRepository.findByEmail(dto.email()).getId();
+            clientId = clientRepository.findByEmail(dto.clientEmail()).getId();
         }
-
         eventRepository.save(eventMapper.toEntity(dto,userId, clientId));
     };
 
