@@ -36,10 +36,11 @@ public class EventService {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
-        Long clientId = dto.clientId();
+        System.out.println("service " + dto.serviceId());
+        Client client = clientRepository.findByEmail(dto.clientEmail());
 
-        if(dto.clientId() == null){
-            Client client = new Client(
+        if(client == null){
+            client = new Client(
                     dto.clientName(),
                     dto.clientEmail()
             );
@@ -47,12 +48,12 @@ public class EventService {
                 client.setPhone(dto.clientPhone());
             }
             clientRepository.save(client);
-            clientId = clientRepository.findByEmail(dto.clientEmail()).getId();
         }
-        eventRepository.save(eventMapper.toEntity(dto,userId, clientId));
+        eventRepository.save(eventMapper.toEntity(dto,userId, client));
     };
 
     public void deleteEvent(Long id) {
+        System.out.println(id);
         eventRepository.deleteById(id);
     }
 

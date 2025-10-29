@@ -43,10 +43,9 @@ public class EventMapper {
         return events.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    public Event toEntity(EventCreateDTO dto, Long userId, Long clientId) {
+    public Event toEntity(EventCreateDTO dto, Long userId, Client client) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        Client client = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
         ServiceEntity serviceEntity =serviceRepository.findById(dto.serviceId()).orElseThrow(() -> new RuntimeException("Service not found"));
         return new Event(
                 user,

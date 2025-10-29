@@ -18,10 +18,8 @@ public record EventCreateDTO(
         String clientEmail,
         Integer clientPhone,
         @NotNull
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         LocalDateTime startDate,
         @NotNull
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         LocalDateTime endDate,
         @NotNull
         @Enumerated(EnumType.STRING)

@@ -33,7 +33,7 @@ public class EventController {
         eventService.createNewEvent(dto, authHeader);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent (@PathVariable Long id) {
         eventService.deleteEvent(id);
