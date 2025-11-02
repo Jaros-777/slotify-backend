@@ -59,16 +59,10 @@ public class EventMapper {
     }
 
     public void updateEntity(EventDTO dto, Event event) {
-        if (dto.clientEmail() != null) {
-            Client client =  clientRepository.findByEmail(dto.clientEmail());
-            if (client == null) {
-                throw new EntityNotFoundException("Client with email " + dto.clientEmail() + " not found");
-            }
-            event.setClient(client);
-        }
 
         if (dto.serviceId() != null) {
-            ServiceEntity serviceEntity = serviceRepository.findById(dto.serviceId()).orElse(null);
+            ServiceEntity serviceEntity = serviceRepository.findById(dto.serviceId())
+                    .orElseThrow(() -> new EntityNotFoundException("Service with id " + dto.serviceId() + " not found"));
             event.setServiceEntity(serviceEntity);
         }
 

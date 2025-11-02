@@ -7,11 +7,14 @@ import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.mapper.EventMapper;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +38,6 @@ public class EventService {
     public void createNewEvent(EventCreateDTO dto,String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
-
-        System.out.println("service " + dto.serviceId());
         Client client = clientRepository.findByEmail(dto.clientEmail());
 
         if(client == null){
@@ -53,14 +54,33 @@ public class EventService {
     };
 
     public void deleteEvent(Long id) {
-        System.out.println(id);
         eventRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateEvent(EventDTO dto) {
-        eventRepository.findById(dto.id()).ifPresent(event -> {
-            eventMapper.updateEntity(dto, event);
-            eventRepository.save(event);
-        });
+        Event currentEvent = eventRepository.findById(dto.id()).get();
+        Client clientFromDTO = clientRepository.findByEmail(dto.clientEmail());
+
+
+        if(clientFromDTO == null){
+            clientFromDTO = new Client(
+                    dto.clientName(),
+                    dto.clientEmail());
+            if(dto.clientPhone() != null){
+                clientFromDTO.setPhone(dto.clientPhone());
+            }
+            clientRepository.save(clientFromDTO);
+            currentEvent.setClient(clientFromDTO);
+        }else{
+            if(!Objects.equals(dto.clientName(), clientFromDTO.getName())){
+                clientFromDTO.setName(dto.clientName());
+            }
+            if(!Objects.equals(dto.clientPhone(), clientFromDTO.getPhone())){
+                clientFromDTO.setPhone(dto.clientPhone());
+            }
+        }
+
+        eventMapper.updateEntity(dto, currentEvent);
     }
 }
