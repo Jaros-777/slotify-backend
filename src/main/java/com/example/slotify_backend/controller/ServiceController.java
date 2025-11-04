@@ -24,19 +24,19 @@ public class ServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewService(@Valid @RequestBody ServiceCreateDTO dto) {
-        serviceService.createNewService(dto);
+    public void createNewService(@Valid @RequestBody ServiceCreateDTO dto, @RequestHeader("Authorization") String authHeader) {
+        serviceService.createNewService(dto, authHeader);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteService(@RequestParam Long serviceId) {
-        serviceService.deleteServiceById(serviceId);
+    public void deleteService(@PathVariable Long id) {
+        serviceService.deleteServiceById(id);
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void updateService(@Valid @RequestBody ServiceDTO dto) {
-         serviceService.updateServiceById(dto);
+    public void updateService(@Valid @RequestBody ServiceDTO dto,@RequestHeader("Authorization") String authHeader) {
+         serviceService.updateServiceById(dto,authHeader);
     }
 }

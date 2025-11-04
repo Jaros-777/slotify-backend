@@ -18,23 +18,24 @@ public class ServiceMapper {
 
     private final UserRepository userRepository;
 
-    public ServiceEntity toEntity(ServiceCreateDTO dto) {
-        User user = userRepository.findById(dto.userId()).orElse(null);
+    public ServiceEntity toEntity(ServiceCreateDTO dto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return  new ServiceEntity(
                 user,
                 dto.name(),
                 dto.price(),
-                dto.duration()
+                dto.duration(),
+                dto.description()
         );
     };
 
     public ServiceDTO toDTO(ServiceEntity entity) {
         return new ServiceDTO(
                 entity.getId(),
-                entity.getUser().getId(),
                 entity.getName(),
                 entity.getPrice(),
-                entity.getDuration()
+                entity.getDuration(),
+                entity.getDescription()
         );
     }
 
@@ -42,14 +43,15 @@ public class ServiceMapper {
         return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    public void updateDTO(ServiceDTO dto, ServiceEntity entity) {
-        if (dto.userId() != null) {
-            User user =  userRepository.findById(dto.userId()).orElse(null);
+    public void updateDTO(ServiceDTO dto, ServiceEntity entity, Long userId) {
+        if (userId != null) {
+            User user =  userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
             entity.setUser(user);
         }
 
         if (dto.name() != null) entity.setName(dto.name());
         if (dto.price() != null) entity.setPrice(dto.price());
         if (dto.duration() != null) entity.setDuration(dto.duration());
+        if(dto.description() != null) entity.setDescription(dto.description());
     }
 }

@@ -79,7 +79,7 @@ class EventControllerTest {
         client = new Client("client");
         clientRepository.saveAndFlush(client);
 
-        service1 = new ServiceEntity(user, "Repair car", 200, 3600);
+        service1 = new ServiceEntity(user, "Repair car", 200, 3600, "");
         serviceRepository.saveAndFlush(service1);
 
 

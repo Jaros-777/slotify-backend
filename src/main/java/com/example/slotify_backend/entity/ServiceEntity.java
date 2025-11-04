@@ -28,13 +28,15 @@ public class ServiceEntity {
     Integer price;
     @NotNull
     Integer duration;
+    String description;
     @OneToMany
     List<Event> events = new ArrayList<>();
 
-    public ServiceEntity(User user, String name, Integer price, Integer duration) {
+    public ServiceEntity(User user, String name, Integer price, Integer duration, String description) {
         this.user = user;
         this.name = name;
         this.price = price;
         this.duration = duration;
+        this.description = description;
     }
 }

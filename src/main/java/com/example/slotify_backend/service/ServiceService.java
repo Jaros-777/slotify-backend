@@ -27,17 +27,23 @@ public class ServiceService {
         return serviceMapper.toDTO(services);
     }
 
-    public void createNewService(ServiceCreateDTO dto) {
-        serviceRepository.save(serviceMapper.toEntity(dto));
+    public void createNewService(ServiceCreateDTO dto,String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+
+        serviceRepository.save(serviceMapper.toEntity(dto, userId));
     }
 
     public void deleteServiceById(Long serviceId) {
         serviceRepository.deleteById(serviceId);
     }
 
-    public void updateServiceById(ServiceDTO dto) {
+    public void updateServiceById(ServiceDTO dto,String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+        System.out.println(dto.toString());
         serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
-            serviceMapper.updateDTO(dto, serviceEntity);
+            serviceMapper.updateDTO(dto, serviceEntity,userId);
             serviceRepository.save(serviceEntity);
         });
     };
