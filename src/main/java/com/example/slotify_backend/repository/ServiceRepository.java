@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
     List<ServiceEntity> findAllByUserId(Long userId);
+    ServiceEntity findByIsEditableAndUserId(Boolean isEditable, Long userId);
 }

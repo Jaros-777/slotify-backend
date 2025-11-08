@@ -64,7 +64,8 @@ public class AuthService implements UserDetailsService {
                 "Not assigned",
                 0,
                 900,//15min
-                ""
+                "",
+                false
         );
         serviceRepository.save(serviceEntity);
 

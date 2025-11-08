@@ -30,8 +30,8 @@ public class ServiceController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteService(@PathVariable Long id) {
-        serviceService.deleteServiceById(id);
+    public void deleteService(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        serviceService.deleteServiceById(id, authHeader);
     }
 
     @PutMapping()

@@ -18,14 +18,15 @@ public class ServiceMapper {
 
     private final UserRepository userRepository;
 
-    public ServiceEntity toEntity(ServiceCreateDTO dto, Long userId) {
+    public ServiceEntity toEntity(ServiceCreateDTO dto, Long userId, Boolean toIsEditable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return  new ServiceEntity(
                 user,
                 dto.name(),
                 dto.price(),
                 dto.duration(),
-                dto.description()
+                dto.description(),
+                toIsEditable
         );
     };
 

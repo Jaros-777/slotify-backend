@@ -29,14 +29,18 @@ public class ServiceEntity {
     @NotNull
     Integer duration;
     String description;
+    @NotNull
+    @Column(name = "is_editable")
+    Boolean isEditable;
     @OneToMany
     List<Event> events = new ArrayList<>();
 
-    public ServiceEntity(User user, String name, Integer price, Integer duration, String description) {
+    public ServiceEntity(User user, String name, Integer price, Integer duration, String description, Boolean isEditable) {
         this.user = user;
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.isEditable = isEditable;
     }
 }
