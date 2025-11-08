@@ -11,6 +11,7 @@ public record ServiceDTO(
         Integer price,
         @NotNull
         Integer duration,
-        String description
+        String description,
+        Boolean isEditable
 ) {
 }
