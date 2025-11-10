@@ -1,41 +1,37 @@
 package com.example.slotify_backend.entity;
 
-import com.example.slotify_backend.dto.BusinessProfileDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
+@Table(name = "business_profile")
 @Getter
 @Setter
-@Entity
-@Table(name = "clients")
 @NoArgsConstructor
-public class Client {
+public class BusinessProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @NotBlank
     @Column(unique = true)
+    private String name;
+    private String slogan;
+    private String description;
+    @Email
     private String email;
     private Integer phone;
-    @OneToMany
-    private List<Event> events = new ArrayList<>();
+    private String websiteURL;
+    private String facebookURL;
 
-    public Client(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
-
-    public Client(String name) {
+    public BusinessProfile(User user ,String name) {
+        this.user = user;
         this.name = name;
     }
-
 }

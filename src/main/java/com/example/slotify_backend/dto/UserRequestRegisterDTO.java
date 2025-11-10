@@ -10,6 +10,8 @@ public record UserRequestRegisterDTO (
     @Email
     String email,
     @NotBlank
-     String password
+     String password,
+    @NotBlank
+    String businessName
 
 ){}

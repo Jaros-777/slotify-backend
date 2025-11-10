@@ -3,9 +3,11 @@ package com.example.slotify_backend.service;
 import com.example.slotify_backend.dto.TokenResponeDTO;
 import com.example.slotify_backend.dto.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.UserRequestRegisterDTO;
+import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.exception.UserAlreadyExistException;
+import com.example.slotify_backend.repository.BusinessProfileRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import jakarta.validation.Valid;
@@ -27,6 +29,9 @@ import static com.example.slotify_backend.entity.enums.Role.USER_COMPANY;
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
 
+
+    @Autowired
+    private BusinessProfileRepository businessProfileRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -55,10 +60,22 @@ public class AuthService implements UserDetailsService {
         if(userRepository.existsByEmail(dto.email())) {
             throw new UserAlreadyExistException("User already exists");
         }
+
+
+
         User user = new User(
                 dto.name(), dto.email(), passwordEncoder.encode(dto.password()), USER_COMPANY
         );
-            userRepository.save(user);
+
+        userRepository.save(user);
+
+        BusinessProfile businessProfile = new BusinessProfile(
+                user,
+                dto.businessName()
+        );
+        businessProfileRepository.save(businessProfile);
+
+
         ServiceEntity serviceEntity = new ServiceEntity(
                 user,
                 "Not assigned",

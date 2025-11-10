@@ -38,6 +38,7 @@ public class AuthSecurity {
                         .requestMatchers("/auth/validate").authenticated()
                         .requestMatchers("/events/**").authenticated()
                         .requestMatchers("/service/**").authenticated()
+                        .requestMatchers("/business-profile/**").authenticated()
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
                         .anyRequest().authenticated()
                 )

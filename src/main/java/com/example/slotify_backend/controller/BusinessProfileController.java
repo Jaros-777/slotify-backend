@@ -1,0 +1,28 @@
+package com.example.slotify_backend.controller;
+
+import com.example.slotify_backend.dto.BusinessProfileDTO;
+import com.example.slotify_backend.service.BusinessProfileService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/business-profile")
+@AllArgsConstructor
+public class BusinessProfileController {
+
+    private final BusinessProfileService businessProfileService;
+
+    @GetMapping
+    public BusinessProfileDTO getBusinessProfileDetails(@RequestHeader("Authorization") String authHeader){
+        return businessProfileService.getBusinessProfileDetails(authHeader);
+    };
+
+
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public void updateBusinessProfile(@Valid @RequestBody BusinessProfileDTO dto) {
+        businessProfileService.updateBusinessProfile(dto);
+    }
+}

@@ -46,6 +46,9 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany
     private List<Event> events = new ArrayList<>();
+    @OneToMany
+    @Column(nullable = false)
+    private List<BusinessProfile> businessProfile;
 
     public User(String name, String email, String password, Role role) {
         this.name = name;

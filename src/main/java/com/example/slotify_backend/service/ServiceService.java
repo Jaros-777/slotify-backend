@@ -62,7 +62,6 @@ public class ServiceService {
     public void updateServiceById(ServiceDTO dto,String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
-        System.out.println(dto.toString());
         serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
             serviceMapper.updateDTO(dto, serviceEntity,userId);
             serviceRepository.save(serviceEntity);
