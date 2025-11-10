@@ -25,7 +25,7 @@ public class Client {
     @Column(unique = true)
     private String email;
     private Integer phone;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
 
     public Client(String name, String email) {

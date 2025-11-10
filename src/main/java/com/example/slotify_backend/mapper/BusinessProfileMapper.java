@@ -25,7 +25,7 @@ public class BusinessProfileMapper {
     }
 
     public void updateDTO(BusinessProfileDTO dto, BusinessProfile entity) {
-        if (dto.name() != null) entity.setName(dto.name());
+        if (dto.businessName() != null) entity.setName(dto.businessName());
         if (dto.slogan() != null) entity.setSlogan(dto.slogan());
         if (dto.description() != null) entity.setDescription(dto.description());
         if(dto.email() != null) entity.setEmail(dto.email());

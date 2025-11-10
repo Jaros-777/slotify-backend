@@ -9,7 +9,7 @@ public record BusinessProfileDTO(
         @NotNull
         Long userId,
         @NotBlank
-        String name,
+        String businessName,
         String slogan,
         String description,
         @Email
