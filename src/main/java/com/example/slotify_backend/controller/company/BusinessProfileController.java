@@ -1,4 +1,4 @@
-package com.example.slotify_backend.controller;
+package com.example.slotify_backend.controller.company;
 
 import com.example.slotify_backend.dto.BusinessProfileDTO;
 import com.example.slotify_backend.service.BusinessProfileService;

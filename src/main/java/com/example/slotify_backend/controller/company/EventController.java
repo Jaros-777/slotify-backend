@@ -1,10 +1,7 @@
-package com.example.slotify_backend.controller;
+package com.example.slotify_backend.controller.company;
 
 import com.example.slotify_backend.dto.EventCreateDTO;
-import com.example.slotify_backend.dto.AllUserEventsInWeekDTO;
 import com.example.slotify_backend.dto.EventDTO;
-import com.example.slotify_backend.entity.Client;
-import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

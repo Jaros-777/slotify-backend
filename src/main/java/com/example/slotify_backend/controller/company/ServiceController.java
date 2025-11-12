@@ -1,4 +1,4 @@
-package com.example.slotify_backend.controller;
+package com.example.slotify_backend.controller.company;
 
 import com.example.slotify_backend.dto.ServiceCreateDTO;
 import com.example.slotify_backend.dto.ServiceDTO;
@@ -18,7 +18,7 @@ public class ServiceController {
     ServiceService serviceService;
 
     @GetMapping
-    public List<ServiceDTO> getAllServicesByUser(@RequestHeader("Authorization") String authHeader){
+    public List<ServiceDTO> getAllServicesByUser( @RequestHeader(value = "Authorization") String authHeader){
        return serviceService.getAllServicesByUser(authHeader);
     };
 

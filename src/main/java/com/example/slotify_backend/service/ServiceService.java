@@ -24,15 +24,16 @@ public class ServiceService {
     private final JwtService jwtService;
     private final EventRepository eventRepository;
 
-    public List<ServiceDTO> getAllServicesByUser(String authHeader){
+    public List<ServiceDTO> getAllServicesByUser(String authHeader) {
+
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
-        List<ServiceEntity> services =serviceRepository.findAllByUserId(userId);
+        List<ServiceEntity> services = serviceRepository.findAllByUserId(userId);
         return serviceMapper.toDTO(services);
     }
 
-    public void createNewService(ServiceCreateDTO dto,String authHeader) {
+    public void createNewService(ServiceCreateDTO dto, String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
@@ -44,11 +45,11 @@ public class ServiceService {
         List<Event> eventsList = eventRepository.findAllEventsByServiceEntity_Id(serviceId);
 
 
-        if(!eventsList.isEmpty()){
+        if (!eventsList.isEmpty()) {
             String token = authHeader.replace("Bearer ", "").trim();
             Long userId = jwtService.getUserIdFromToken(token);
 
-            ServiceEntity defaultService = serviceRepository.findByIsEditableAndUserId(false,userId);
+            ServiceEntity defaultService = serviceRepository.findByIsEditableAndUserId(false, userId);
 
             for (Event event : eventsList) {
                 event.setServiceEntity(defaultService);
@@ -59,12 +60,14 @@ public class ServiceService {
         serviceRepository.deleteById(serviceId);
     }
 
-    public void updateServiceById(ServiceDTO dto,String authHeader) {
+    public void updateServiceById(ServiceDTO dto, String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
-            serviceMapper.updateDTO(dto, serviceEntity,userId);
+            serviceMapper.updateDTO(dto, serviceEntity, userId);
             serviceRepository.save(serviceEntity);
         });
-    };
+    }
+
+    ;
 }
