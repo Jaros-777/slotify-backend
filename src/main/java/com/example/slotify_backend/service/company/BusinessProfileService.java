@@ -1,6 +1,7 @@
-package com.example.slotify_backend.service;
+package com.example.slotify_backend.service.company;
 
-import com.example.slotify_backend.dto.BusinessProfileDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileNameDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.mapper.BusinessProfileMapper;
 import com.example.slotify_backend.repository.BusinessProfileRepository;
@@ -21,6 +22,15 @@ public class BusinessProfileService {
 
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
         return businessProfileMapper.toDTO(profile);
+    }
+
+    public BusinessProfileNameDTO getBusinessName(String authHeader){
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+
+        BusinessProfile profile = businessProfileRepository.findByUserId(userId);
+        System.out.println(profile.getName());
+        return businessProfileMapper.nameToDTO(profile);
     }
 
     public void updateBusinessProfile(BusinessProfileDTO dto) {

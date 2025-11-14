@@ -1,6 +1,7 @@
 package com.example.slotify_backend.mapper;
 
-import com.example.slotify_backend.dto.BusinessProfileDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileNameDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,5 +33,11 @@ public class BusinessProfileMapper {
         if(dto.phone() != null) entity.setPhone(dto.phone());
         if (dto.websiteURL() != null) entity.setWebsiteURL(dto.websiteURL());
         if (dto.facebookURL() != null) entity.setFacebookURL(dto.facebookURL());
+    }
+
+    public BusinessProfileNameDTO nameToDTO(BusinessProfile entity) {
+        return new BusinessProfileNameDTO(
+                entity.getName()
+        );
     }
 }
