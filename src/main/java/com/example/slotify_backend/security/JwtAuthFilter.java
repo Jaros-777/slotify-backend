@@ -1,6 +1,6 @@
 package com.example.slotify_backend.security;
 
-import com.example.slotify_backend.service.JwtService;
+import com.example.slotify_backend.service.company.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,5 @@
 package com.example.slotify_backend.entity;
 
-import com.example.slotify_backend.dto.BusinessProfileDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

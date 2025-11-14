@@ -1,19 +1,16 @@
-package com.example.slotify_backend.service;
+package com.example.slotify_backend.service.company;
 
-import com.example.slotify_backend.dto.ServiceCreateDTO;
-import com.example.slotify_backend.dto.ServiceDTO;
+import com.example.slotify_backend.dto.company.ServiceCreateDTO;
+import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.entity.Event;
-import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.mapper.ServiceMapper;
 import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import com.example.slotify_backend.entity.ServiceEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

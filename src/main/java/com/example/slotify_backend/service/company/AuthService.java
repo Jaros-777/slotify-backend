@@ -1,8 +1,8 @@
-package com.example.slotify_backend.service;
+package com.example.slotify_backend.service.company;
 
-import com.example.slotify_backend.dto.TokenResponeDTO;
-import com.example.slotify_backend.dto.UserRequestLoginDTO;
-import com.example.slotify_backend.dto.UserRequestRegisterDTO;
+import com.example.slotify_backend.dto.company.TokenResponeDTO;
+import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
+import com.example.slotify_backend.dto.company.UserRequestRegisterDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;

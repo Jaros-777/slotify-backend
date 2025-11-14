@@ -1,27 +1,19 @@
 package com.example.slotify_backend.controller;
 
-import com.example.slotify_backend.dto.EventCreateDTO;
-import com.example.slotify_backend.dto.UserRequestLoginDTO;
+import com.example.slotify_backend.dto.company.EventCreateDTO;
+import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import com.example.slotify_backend.entity.enums.Role;
-import com.example.slotify_backend.mapper.EventMapper;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +27,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.web.servlet.function.RequestPredicates.contentType;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -1,4 +1,4 @@
-package com.example.slotify_backend.dto;
+package com.example.slotify_backend.dto.company;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

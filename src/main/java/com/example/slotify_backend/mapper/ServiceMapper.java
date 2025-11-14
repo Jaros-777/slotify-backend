@@ -1,8 +1,7 @@
 package com.example.slotify_backend.mapper;
 
-import com.example.slotify_backend.dto.ServiceCreateDTO;
-import com.example.slotify_backend.dto.ServiceDTO;
-import com.example.slotify_backend.entity.Client;
+import com.example.slotify_backend.dto.company.ServiceCreateDTO;
+import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.example.slotify_backend.controller.client;
-import com.example.slotify_backend.dto.BusinessProfileWithServicesDTO;
-import com.example.slotify_backend.service.BusinessPageService;
+import com.example.slotify_backend.dto.client.BusinessProfileWithServicesDTO;
+import com.example.slotify_backend.service.client.BusinessPageService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

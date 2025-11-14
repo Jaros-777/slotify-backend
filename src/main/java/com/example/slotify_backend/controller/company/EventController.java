@@ -1,8 +1,8 @@
 package com.example.slotify_backend.controller.company;
 
-import com.example.slotify_backend.dto.EventCreateDTO;
-import com.example.slotify_backend.dto.EventDTO;
-import com.example.slotify_backend.service.EventService;
+import com.example.slotify_backend.dto.company.EventCreateDTO;
+import com.example.slotify_backend.dto.company.EventDTO;
+import com.example.slotify_backend.service.company.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

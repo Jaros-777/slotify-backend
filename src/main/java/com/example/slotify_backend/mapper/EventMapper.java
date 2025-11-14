@@ -1,7 +1,7 @@
 package com.example.slotify_backend.mapper;
 
-import com.example.slotify_backend.dto.EventCreateDTO;
-import com.example.slotify_backend.dto.EventDTO;
+import com.example.slotify_backend.dto.company.EventCreateDTO;
+import com.example.slotify_backend.dto.company.EventDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.ServiceEntity;

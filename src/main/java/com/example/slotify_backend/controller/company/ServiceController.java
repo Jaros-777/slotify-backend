@@ -1,8 +1,8 @@
 package com.example.slotify_backend.controller.company;
 
-import com.example.slotify_backend.dto.ServiceCreateDTO;
-import com.example.slotify_backend.dto.ServiceDTO;
-import com.example.slotify_backend.service.ServiceService;
+import com.example.slotify_backend.dto.company.ServiceCreateDTO;
+import com.example.slotify_backend.dto.company.ServiceDTO;
+import com.example.slotify_backend.service.company.ServiceService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

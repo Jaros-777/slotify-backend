@@ -1,12 +1,11 @@
 package com.example.slotify_backend.controller;
 
 
-import com.example.slotify_backend.dto.UserRequestLoginDTO;
+import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.repository.UserRepository;
-import com.example.slotify_backend.service.JwtService;
+import com.example.slotify_backend.service.company.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

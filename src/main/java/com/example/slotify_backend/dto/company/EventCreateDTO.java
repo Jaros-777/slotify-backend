@@ -1,10 +1,9 @@
-package com.example.slotify_backend.dto;
+package com.example.slotify_backend.dto.company;
 
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 

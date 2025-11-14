@@ -1,8 +1,8 @@
-package com.example.slotify_backend.service;
+package com.example.slotify_backend.service.client;
 
-import com.example.slotify_backend.dto.BusinessProfileDTO;
-import com.example.slotify_backend.dto.BusinessProfileWithServicesDTO;
-import com.example.slotify_backend.dto.ServiceDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileDTO;
+import com.example.slotify_backend.dto.client.BusinessProfileWithServicesDTO;
+import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.mapper.BusinessProfileMapper;
@@ -12,7 +12,6 @@ import com.example.slotify_backend.repository.ServiceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

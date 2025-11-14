@@ -1,6 +1,7 @@
-package com.example.slotify_backend.dto;
+package com.example.slotify_backend.dto.client;
 
-import com.example.slotify_backend.entity.ServiceEntity;
+import com.example.slotify_backend.dto.company.BusinessProfileDTO;
+import com.example.slotify_backend.dto.company.ServiceDTO;
 import lombok.Getter;
 import lombok.Setter;
 

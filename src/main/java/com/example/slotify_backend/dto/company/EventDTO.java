@@ -1,4 +1,4 @@
-package com.example.slotify_backend.dto;
+package com.example.slotify_backend.dto.company;
 
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import jakarta.persistence.*;

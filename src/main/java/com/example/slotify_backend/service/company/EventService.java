@@ -1,13 +1,12 @@
-package com.example.slotify_backend.service;
+package com.example.slotify_backend.service.company;
 
-import com.example.slotify_backend.dto.EventCreateDTO;
-import com.example.slotify_backend.dto.EventDTO;
+import com.example.slotify_backend.dto.company.EventCreateDTO;
+import com.example.slotify_backend.dto.company.EventDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.mapper.EventMapper;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
