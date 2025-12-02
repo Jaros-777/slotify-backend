@@ -2,7 +2,6 @@ package com.example.slotify_backend.controller.company;
 
 import com.example.slotify_backend.dto.company.AvailabilityDTO;
 import com.example.slotify_backend.service.company.AvailabilityService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -7,6 +7,9 @@ import com.example.slotify_backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @AllArgsConstructor
 public class AvailabilityMapper {
@@ -32,6 +35,10 @@ public class AvailabilityMapper {
                 availabilityDTO.dayOfWeek(),
                 user
         );
+    }
+
+    public List<AvailabilityDTO> toDTO(List<Availability> availabilities) {
+        return availabilities.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public void updateAvailability(AvailabilityDTO availabilityDTO, Availability availability) {
