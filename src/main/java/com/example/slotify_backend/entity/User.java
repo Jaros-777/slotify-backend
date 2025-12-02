@@ -49,9 +49,6 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "business_profile_id")
     private BusinessProfile businessProfile;
-    @OneToMany
-    @JoinColumn(name = "availability_id")
-    private List<Availability> availabilities;
 
     public User(String name, String email, String password, Role role) {
         this.name = name;

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record AvailabilityDTO(
         @NotNull
-        Integer id,
+        Long id,
         @NotNull
         Integer dayOfWeek,
         @NotBlank

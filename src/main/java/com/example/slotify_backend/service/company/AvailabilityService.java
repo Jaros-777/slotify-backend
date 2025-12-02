@@ -1,7 +1,9 @@
 package com.example.slotify_backend.service.company;
 import com.example.slotify_backend.dto.company.AvailabilityDTO;
+import com.example.slotify_backend.entity.Availability;
 import com.example.slotify_backend.mapper.AvailabilityMapper;
 import com.example.slotify_backend.repository.AvailabiltyRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +30,13 @@ public class AvailabilityService {
 
     }
 
-    public void updateAvailabilty(String authHeader, AvailabilityDTO availabilityDTO) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+    @Transactional
+    public void updateAvailabilty( List<AvailabilityDTO> availabilityDTO) {
+
+        for (AvailabilityDTO currentAvailability : availabilityDTO) {
+            Availability current = availabiltyRepository.findById(currentAvailability.id());
+            availabilityMapper.updateAvailability(currentAvailability, current);
+        }
+
     }
 }

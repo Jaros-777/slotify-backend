@@ -24,7 +24,7 @@ public class AvailabilityController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateAvailabilty(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody AvailabilityDTO availabilityDTO) {
-        availabilityService.updateAvailabilty(authHeader, availabilityDTO);
+    public void updateAvailabilty(@Valid @RequestBody List<AvailabilityDTO> availabilityDTO) {
+        availabilityService.updateAvailabilty( availabilityDTO);
     }
 }

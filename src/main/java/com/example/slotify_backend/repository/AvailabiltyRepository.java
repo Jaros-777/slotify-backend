@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AvailabiltyRepository extends JpaRepository<Availability, Integer> {
     List<Availability> findAllByUserId(Long userId);
+    Availability findById(Long id);
 }
