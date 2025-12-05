@@ -6,7 +6,11 @@ import com.example.slotify_backend.service.company.BusinessProfileService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/business-profile")
@@ -23,6 +27,11 @@ public class BusinessProfileController {
     @GetMapping("/name")
     public BusinessProfileNameDTO getBusinessName(@RequestHeader("Authorization") String authHeader){
         return businessProfileService.getBusinessName(authHeader);
+    };
+
+    @PostMapping("/pictures")
+    public List<String> uploadPictures(@RequestParam("files")List<MultipartFile> files,@RequestHeader("Authorization") String authHeader){
+        return businessProfileService.uploadPictures(files,authHeader);
     };
 
 

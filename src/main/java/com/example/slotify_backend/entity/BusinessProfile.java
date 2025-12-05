@@ -29,6 +29,8 @@ public class BusinessProfile {
     private Integer phone;
     private String websiteURL;
     private String facebookURL;
+    private String profilePictureURL;
+    private String backgroundPictureURL;
 
     public BusinessProfile(User user ,String name) {
         this.user = user;

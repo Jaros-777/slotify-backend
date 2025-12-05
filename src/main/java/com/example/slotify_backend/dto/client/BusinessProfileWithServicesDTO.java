@@ -5,6 +5,7 @@ import com.example.slotify_backend.dto.company.BusinessProfileDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
