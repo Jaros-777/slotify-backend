@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -40,18 +41,30 @@ public class BusinessProfileService {
     }
 
     @Transactional
-    public void uploadPictures(List<MultipartFile> files,String authHeader){
+    public void uploadPictures(MultipartFile profilePic,MultipartFile backgroundPic,String authHeader){
+        System.out.println("START UPLOAD PICTURE");
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
 
-        List<String> picturesUrls = new ArrayList<>();
+//        if(profile.getProfilePictureURL() != null && profilePic != null){
+//            supabaseStorageService.deletePicture(profile.getProfilePictureURL());
+//            System.out.println("DELETED PROFILE PICTURE");
+//        }
+//        if(profile.getBackgroundPictureURL() != null && backgroundPic != null){
+//            System.out.println("-------- " + profile.getBackgroundPictureURL());
+//            supabaseStorageService.deletePicture(profile.getBackgroundPictureURL());
+//            System.out.println("DELETED PROFILE BACKGROUND PICTURE");
+//        }
 
-        picturesUrls.add(supabaseStorageService.uploadPicture(files.getFirst(), "/"+ userId + "profilePic"));
-        picturesUrls.add(supabaseStorageService.uploadPicture(files.getLast(), "/"+ userId + "backgroundPic"));
+        if(profilePic != null){
+            profile.setProfilePictureURL(supabaseStorageService.uploadPicture(profilePic, "/"+ userId + UUID.randomUUID() +"profilePic"));
+        }
+        if(backgroundPic != null){
+            profile.setBackgroundPictureURL(supabaseStorageService.uploadPicture(backgroundPic, "/"+ userId + UUID.randomUUID() + "backgroundPic"));
+        }
 
-        profile.setProfilePictureURL(picturesUrls.getFirst());
-        profile.setBackgroundPictureURL(picturesUrls.getLast());
+        System.out.println("UPLOADED PICTURES");
     }
 
     public void updateBusinessProfile(BusinessProfileDTO dto) {

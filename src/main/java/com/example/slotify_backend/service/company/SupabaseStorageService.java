@@ -45,4 +45,25 @@ public class SupabaseStorageService {
         }
 
     }
+    public void deletePicture(String path) {
+        try {
+            String deleteUrl = supabaseUrl + "/storage/v1/object/" + supabaseBucket + "/" + path;
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(deleteUrl))
+                    .header("Authorization", "Bearer " + supabaseKey)
+                    .DELETE()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() < 200 || response.statusCode() >= 300) {
+                throw new RuntimeException("Delete failed: " + path + response.body());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting from Supabase", e);
+        }
+    }
+
 }
