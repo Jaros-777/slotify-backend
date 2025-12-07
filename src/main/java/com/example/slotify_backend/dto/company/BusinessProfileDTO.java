@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 public record BusinessProfileDTO(
         @NotNull
         Long id,
-        @NotNull
-        Long userId,
+//        @NotNull
+//        Long userId,
         @NotBlank
         String businessName,
         String slogan,
@@ -16,6 +16,8 @@ public record BusinessProfileDTO(
         String email,
         Integer phone,
         String websiteURL,
-        String facebookURL
+        String facebookURL,
+        String profilePictureURL,
+        String backgroundPictureURL
         ) {
 }

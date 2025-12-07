@@ -30,8 +30,9 @@ public class BusinessProfileController {
     };
 
     @PostMapping("/pictures")
-    public List<String> uploadPictures(@RequestParam("files")List<MultipartFile> files,@RequestHeader("Authorization") String authHeader){
-        return businessProfileService.uploadPictures(files,authHeader);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void uploadPictures(@RequestParam("files")List<MultipartFile> files,@RequestHeader("Authorization") String authHeader){
+        businessProfileService.uploadPictures(files,authHeader);
     };
 
 

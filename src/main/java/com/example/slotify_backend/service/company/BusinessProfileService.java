@@ -5,15 +5,13 @@ import com.example.slotify_backend.dto.company.BusinessProfileNameDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.mapper.BusinessProfileMapper;
 import com.example.slotify_backend.repository.BusinessProfileRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -41,24 +39,19 @@ public class BusinessProfileService {
         return businessProfileMapper.nameToDTO(profile);
     }
 
-    public List<String> uploadPictures(List<MultipartFile> files,String authHeader){
+    @Transactional
+    public void uploadPictures(List<MultipartFile> files,String authHeader){
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
 
-
-
         List<String> picturesUrls = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String ext = Optional.ofNullable(file.getOriginalFilename())
-                    .orElse("file");
-            String path = "uploads/" + UUID.randomUUID() + "-" + ext;
-            picturesUrls.add(supabaseStorageService.uploadPicture(file, path));
-        }
-//        profile.setProfilePictureURL(picturesUrls.getFirst());
-//        profile.setBackgroundPictureURL(picturesUrls.get(1));
-        
-        return picturesUrls;
+
+        picturesUrls.add(supabaseStorageService.uploadPicture(files.getFirst(), "/"+ userId + "profilePic"));
+        picturesUrls.add(supabaseStorageService.uploadPicture(files.getLast(), "/"+ userId + "backgroundPic"));
+
+        profile.setProfilePictureURL(picturesUrls.getFirst());
+        profile.setBackgroundPictureURL(picturesUrls.getLast());
     }
 
     public void updateBusinessProfile(BusinessProfileDTO dto) {

@@ -22,7 +22,6 @@ public class SupabaseStorageService {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public String uploadPicture(MultipartFile file, String path) {
-        System.out.println(supabaseUrl);
         try {
             String uploadUrl = supabaseUrl + "/storage/v1/object/" + supabaseBucket + "/" + path;
 

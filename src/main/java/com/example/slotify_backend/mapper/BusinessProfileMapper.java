@@ -14,14 +14,16 @@ public class BusinessProfileMapper {
     public BusinessProfileDTO toDTO(BusinessProfile profile) {
         return new BusinessProfileDTO(
                 profile.getId(),
-                profile.getUser().getId(),
+//                profile.getUser().getId(),
                 profile.getName(),
                 profile.getSlogan(),
                 profile.getDescription(),
                 profile.getEmail(),
                 profile.getPhone(),
                 profile.getWebsiteURL(),
-                profile.getFacebookURL()
+                profile.getFacebookURL(),
+                profile.getProfilePictureURL(),
+                profile.getBackgroundPictureURL()
         );
     }
 
