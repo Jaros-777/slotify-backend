@@ -32,7 +32,6 @@ public class BusinessProfileController {
     @PostMapping("/pictures")
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadPictures(@RequestPart(value = "profilePic", required = false)MultipartFile profilePic,@RequestPart(value = "backgroundPic", required = false)MultipartFile backgroundPic,@RequestHeader("Authorization") String authHeader){
-        System.out.println("RECEIVING PICTURE");
         businessProfileService.uploadPictures(profilePic,backgroundPic,authHeader);
     };
 

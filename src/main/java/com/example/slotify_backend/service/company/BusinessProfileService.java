@@ -36,13 +36,11 @@ public class BusinessProfileService {
         Long userId = jwtService.getUserIdFromToken(token);
 
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
-        System.out.println(profile.getName());
         return businessProfileMapper.nameToDTO(profile);
     }
 
     @Transactional
     public void uploadPictures(MultipartFile profilePic,MultipartFile backgroundPic,String authHeader){
-        System.out.println("START UPLOAD PICTURE");
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
@@ -61,6 +59,7 @@ public class BusinessProfileService {
             profile.setProfilePictureURL(supabaseStorageService.uploadPicture(profilePic, "/"+ userId + UUID.randomUUID() +"profilePic"));
         }
         if(backgroundPic != null){
+            System.out.println("SENDED BACKGROUND PICTURE");
             profile.setBackgroundPictureURL(supabaseStorageService.uploadPicture(backgroundPic, "/"+ userId + UUID.randomUUID() + "backgroundPic"));
         }
 

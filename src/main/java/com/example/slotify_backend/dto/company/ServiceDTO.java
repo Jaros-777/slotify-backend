@@ -12,6 +12,7 @@ public record ServiceDTO(
         @NotNull
         Integer duration,
         String description,
-        Boolean isEditable
+        Boolean isEditable,
+        String servicePictureURL
 ) {
 }

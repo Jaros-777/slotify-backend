@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,5 +39,14 @@ public class ServiceController {
     @ResponseStatus(HttpStatus.OK)
     public void updateService(@Valid @RequestBody ServiceDTO dto,@RequestHeader("Authorization") String authHeader) {
          serviceService.updateServiceById(dto,authHeader);
+    }
+
+    @PostMapping("/picture")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void uploadPicture(
+            @RequestPart(value = "servicePic", required = false) MultipartFile servicePic,
+            @RequestPart(value = "id", required = false) Long serviceId,
+            @RequestHeader("Authorization") String authHeader){
+        serviceService.uploadPictures(servicePic,authHeader,serviceId);
     }
 }

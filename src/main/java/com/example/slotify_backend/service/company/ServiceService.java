@@ -2,6 +2,7 @@ package com.example.slotify_backend.service.company;
 
 import com.example.slotify_backend.dto.company.ServiceCreateDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
+import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.mapper.ServiceMapper;
 import com.example.slotify_backend.repository.EventRepository;
@@ -10,8 +11,10 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import com.example.slotify_backend.entity.ServiceEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +23,7 @@ public class ServiceService {
     private final ServiceMapper serviceMapper;
     private final JwtService jwtService;
     private final EventRepository eventRepository;
+    private final SupabaseStorageService storageService;
 
     public List<ServiceDTO> getAllServicesByUser(String authHeader) {
 
@@ -30,7 +34,7 @@ public class ServiceService {
         return serviceMapper.toDTO(services);
     }
 
-    public void createNewService(ServiceCreateDTO dto, String authHeader) {
+    public void createNewService(ServiceCreateDTO dto, String authHeader ) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
@@ -57,14 +61,27 @@ public class ServiceService {
         serviceRepository.deleteById(serviceId);
     }
 
-    public void updateServiceById(ServiceDTO dto, String authHeader) {
+    public void updateServiceById(ServiceDTO dto, String authHeader ) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
+
         serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
             serviceMapper.updateDTO(dto, serviceEntity, userId);
             serviceRepository.save(serviceEntity);
         });
     }
 
-    ;
+    @Transactional
+    public void uploadPictures(MultipartFile servicePic,String authHeader, Long serviceId){
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
+        serviceRepository.findById(serviceId).ifPresent(serviceEntity -> {
+            if(servicePic != null){
+                serviceEntity.setServicePictureURL(storageService.uploadPicture(servicePic, "/"+ userId + UUID.randomUUID() +"servicePic"));
+            }
+        });
+
+        System.out.println("UPLOADED PICTURES");
+    }
+
 }

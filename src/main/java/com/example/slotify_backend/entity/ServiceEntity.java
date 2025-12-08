@@ -29,6 +29,7 @@ public class ServiceEntity {
     @NotNull
     Integer duration;
     String description;
+    String servicePictureURL;
     @NotNull
     @Column(name = "is_editable")
     Boolean isEditable;

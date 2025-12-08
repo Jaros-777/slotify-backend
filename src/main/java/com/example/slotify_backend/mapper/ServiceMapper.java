@@ -36,7 +36,8 @@ public class ServiceMapper {
                 entity.getPrice(),
                 entity.getDuration(),
                 entity.getDescription(),
-                entity.getIsEditable()
+                entity.getIsEditable(),
+                entity.getServicePictureURL()
         );
     }
 
