@@ -45,7 +45,7 @@ public class ServiceController {
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadPicture(
             @RequestPart(value = "servicePic", required = false) MultipartFile servicePic,
-            @RequestPart(value = "id", required = false) Long serviceId,
+            @RequestPart(value = "id", required = false) String serviceId,
             @RequestHeader("Authorization") String authHeader){
         serviceService.uploadPictures(servicePic,authHeader,serviceId);
     }

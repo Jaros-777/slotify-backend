@@ -72,12 +72,14 @@ public class ServiceService {
     }
 
     @Transactional
-    public void uploadPictures(MultipartFile servicePic,String authHeader, Long serviceId){
+    public void uploadPictures(MultipartFile servicePic,String authHeader, String serviceId){
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
-        serviceRepository.findById(serviceId).ifPresent(serviceEntity -> {
+
+        serviceRepository.findById(Long.valueOf(serviceId)).ifPresent(serviceEntity -> {
             if(servicePic != null){
-                serviceEntity.setServicePictureURL(storageService.uploadPicture(servicePic, "/"+ userId + UUID.randomUUID() +"servicePic"));
+                String url = storageService.uploadPicture(servicePic, "/"+ userId + UUID.randomUUID() +"servicePic");
+                serviceEntity.setServicePictureURL(url);
             }
         });
 
