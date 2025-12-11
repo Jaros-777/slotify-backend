@@ -35,7 +35,7 @@ public class AuthSecurity {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/login", "/auth/register","/business-page/**").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register","/business-page/**", "/order/**").permitAll()
                         .requestMatchers("/auth/validate").authenticated()
                         .requestMatchers("/events/**").authenticated()
                         .requestMatchers("/service/**").authenticated()
