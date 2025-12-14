@@ -19,7 +19,7 @@ public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @NotBlank
@@ -33,7 +33,9 @@ public class ServiceEntity {
     @NotNull
     @Column(name = "is_editable")
     Boolean isEditable;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "serviceEntity",
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = false)
     List<Event> events = new ArrayList<>();
 
     public ServiceEntity(User user, String name, Integer price, Integer duration, String description, Boolean isEditable) {

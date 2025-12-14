@@ -23,6 +23,7 @@ public class BusinessProfile {
     @Column(unique = true)
     private String name;
     private String slogan;
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Email
     private String email;
