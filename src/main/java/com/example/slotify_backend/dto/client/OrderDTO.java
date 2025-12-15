@@ -2,9 +2,6 @@ package com.example.slotify_backend.dto.client;
 
 import com.example.slotify_backend.dto.company.AvailabilityDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
-import com.example.slotify_backend.entity.Availability;
-import com.example.slotify_backend.entity.ServiceEntity;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
