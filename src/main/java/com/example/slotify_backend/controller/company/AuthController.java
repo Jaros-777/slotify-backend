@@ -1,5 +1,6 @@
 package com.example.slotify_backend.controller.company;
 
+import com.example.slotify_backend.dto.client.ClientDetailsDTO;
 import com.example.slotify_backend.dto.company.TokenResponeDTO;
 import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.company.UserRequestRegisterDTO;
@@ -35,4 +36,9 @@ public class AuthController {
     @GetMapping("/validate")
     @ResponseStatus(HttpStatus.OK)
     public void validateUser() {}
+
+    @GetMapping
+    public ClientDetailsDTO getClientDetails(@RequestHeader("Authorization") String authHeader) {
+        return authService.getClientDetails(authHeader);
+    }
 }

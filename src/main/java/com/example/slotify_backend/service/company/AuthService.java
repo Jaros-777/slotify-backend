@@ -1,14 +1,17 @@
 package com.example.slotify_backend.service.company;
 
+import com.example.slotify_backend.dto.client.ClientDetailsDTO;
 import com.example.slotify_backend.dto.company.TokenResponeDTO;
 import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.company.UserRequestRegisterDTO;
 import com.example.slotify_backend.entity.*;
 import com.example.slotify_backend.entity.enums.Role;
 import com.example.slotify_backend.exception.UserAlreadyExistException;
+import com.example.slotify_backend.mapper.ClientDetailsMapper;
 import com.example.slotify_backend.repository.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -55,6 +58,7 @@ public class AuthService implements UserDetailsService {
     private final ServiceRepository serviceRepository;
     private final AvailabiltyRepository availabiltyRepository;
     private final ClientRepository clientRepository;
+    private final ClientDetailsMapper clientDetailsMapper;
 
 
     @Transactional
@@ -173,6 +177,14 @@ public class AuthService implements UserDetailsService {
 
         String token = jwtService.generateToken(user.getEmail(), user.getId());
         return new TokenResponeDTO(token, user.getRole());
+    }
+
+    public ClientDetailsDTO getClientDetails(String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long clientId = jwtService.getUserIdFromToken(token);
+        User client = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found") );
+
+        return clientDetailsMapper.toDTO(client);
     }
 
 }
