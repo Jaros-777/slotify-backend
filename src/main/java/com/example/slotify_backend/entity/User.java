@@ -4,7 +4,6 @@ import com.example.slotify_backend.entity.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +43,7 @@ public class User implements UserDetails {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Integer phone;
     @OneToMany
     private List<Event> events = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)

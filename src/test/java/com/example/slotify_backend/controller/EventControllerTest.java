@@ -65,7 +65,7 @@ class EventControllerTest {
                 encoder.encode("password"), Role.USER_COMPANY);
         userRepository.saveAndFlush(user);
 
-        client = new Client("client");
+        client = new Client("client","");
         clientRepository.saveAndFlush(client);
 
         service1 = new ServiceEntity(user, "Repair car", 200, 3600, "", true);
