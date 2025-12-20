@@ -13,7 +13,6 @@ public record UserRequestRegisterDTO (
     String email,
     String password,
     String businessName,
-    @NotNull
     Integer phone,
     @NotNull
     Role role
