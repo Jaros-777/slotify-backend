@@ -12,11 +12,11 @@ import java.net.http.HttpResponse;
 @Service
 public class SupabaseStorageService {
 
-    @Value("${supabase_url}")
+    @Value("${SUPABASE_BUCKET_URL}")
     private String supabaseUrl;
-    @Value("${supabase_key}")
+    @Value("${SUPABASE_BUCKET_KEY}")
     private String supabaseKey;
-    @Value("${supabase_bucket}")
+    @Value("${SUPABASE_BUCKET_NAME}")
     private String supabaseBucket;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();

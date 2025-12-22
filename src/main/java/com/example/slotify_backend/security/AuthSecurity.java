@@ -40,7 +40,7 @@ public class AuthSecurity {
                         .requestMatchers("/events/**").authenticated()
                         .requestMatchers("/service/**").authenticated()
                         .requestMatchers("/business-profile/**").authenticated()
-                        .requestMatchers("/availabilty/**").authenticated()
+                        .requestMatchers("/availability/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
