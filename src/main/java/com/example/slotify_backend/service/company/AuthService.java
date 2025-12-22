@@ -136,6 +136,8 @@ public class AuthService implements UserDetailsService {
                     dto.businessName()
             );
             businessProfileRepository.save(businessProfile);
+            user.setBusinessProfile(businessProfile);
+            userRepository.save(user);
 
 
             ServiceEntity serviceEntity = new ServiceEntity(
