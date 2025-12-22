@@ -12,22 +12,23 @@ import java.net.http.HttpResponse;
 @Service
 public class SupabaseStorageService {
 
-    @Value("${SUPABASE_BUCKET_URL}")
+    @Value("${supabase_url}")
     private String supabaseUrl;
-    @Value("${SUPABASE_BUCKET_KEY}")
+    @Value("${supabase_key}")
     private String supabaseKey;
-    @Value("${SUPABASE_BUCKET_NAME}")
+    @Value("${supabase_bucket}")
     private String supabaseBucket;
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public String uploadPicture(MultipartFile file, String path) {
         try {
-            String uploadUrl = supabaseUrl + "/storage/v1/object/" + supabaseBucket + "/" + path;
+            String cleanPath = path.startsWith("/") ? path.substring(1) : path;
+            String uploadUrl = supabaseUrl.trim() + "/storage/v1/object/" + supabaseBucket.trim() + "/" + cleanPath;
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(uploadUrl))
-                    .header("Authorization", "Bearer " + supabaseKey)
+                    .header("Authorization", "Bearer " + supabaseKey.trim())
                     .header("Content-Type", file.getContentType())
                     .PUT(HttpRequest.BodyPublishers.ofByteArray(file.getBytes()))
                     .build();
@@ -35,7 +36,7 @@ public class SupabaseStorageService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
-                return supabaseUrl + "/storage/v1/object/public/" + supabaseBucket + "/" + path;
+                return supabaseUrl.trim() + "/storage/v1/object/public/" + supabaseBucket.trim() + "/" + path;
             } else {
                 throw new RuntimeException("Upload failed: " + response.body());
             }
@@ -47,11 +48,11 @@ public class SupabaseStorageService {
     }
     public void deletePicture(String path) {
         try {
-            String deleteUrl = supabaseUrl + "/storage/v1/object/" + supabaseBucket + "/" + path;
+            String deleteUrl = supabaseUrl.trim() + "/storage/v1/object/" + supabaseBucket.trim() + "/" + path;
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(deleteUrl))
-                    .header("Authorization", "Bearer " + supabaseKey)
+                    .header("Authorization", "Bearer " + supabaseKey.trim())
                     .DELETE()
                     .build();
 
