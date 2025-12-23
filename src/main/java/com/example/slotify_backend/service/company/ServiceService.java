@@ -82,8 +82,6 @@ public class ServiceService {
                 serviceEntity.setServicePictureURL(url);
             }
         });
-
-        System.out.println("UPLOADED PICTURES");
     }
 
 }

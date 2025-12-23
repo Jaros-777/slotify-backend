@@ -44,6 +44,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private Integer phone;
+    private String pictureURL;
     @OneToMany
     private List<Event> events = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)

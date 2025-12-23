@@ -181,12 +181,4 @@ public class AuthService implements UserDetailsService {
         return new TokenResponeDTO(token, user.getRole());
     }
 
-    public ClientDetailsDTO getClientDetails(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long clientId = jwtService.getUserIdFromToken(token);
-        User client = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found") );
-
-        return clientDetailsMapper.toDTO(client);
-    }
-
 }

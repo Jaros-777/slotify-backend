@@ -31,8 +31,8 @@ public class BusinessProfileMapper {
         if (dto.businessName() != null) entity.setName(dto.businessName());
         if (dto.slogan() != null) entity.setSlogan(dto.slogan());
         if (dto.description() != null) entity.setDescription(dto.description());
-        if(dto.email() != null) entity.setEmail(dto.email());
-        if(dto.phone() != null) entity.setPhone(dto.phone());
+        if (dto.email() != null) entity.setEmail(dto.email());
+        if (dto.phone() != null) entity.setPhone(dto.phone());
         if (dto.websiteURL() != null) entity.setWebsiteURL(dto.websiteURL());
         if (dto.facebookURL() != null) entity.setFacebookURL(dto.facebookURL());
     }

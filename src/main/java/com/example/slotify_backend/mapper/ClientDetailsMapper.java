@@ -11,7 +11,14 @@ public class ClientDetailsMapper {
         return new ClientDetailsDTO(
                 user.getName(),
                 user.getEmail(),
-                user.getPhone()
+                user.getPhone(),
+                user.getPictureURL()
         );
+    }
+
+    public void updateDTO(ClientDetailsDTO dto, User user) {
+        if (dto.name() != null) user.setName(dto.name());
+        if (dto.email() != null) user.setEmail(dto.email());
+        if (dto.phone() != null) user.setPhone(dto.phone());
     }
 }

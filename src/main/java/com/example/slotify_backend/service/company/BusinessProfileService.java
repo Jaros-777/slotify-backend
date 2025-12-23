@@ -59,11 +59,8 @@ public class BusinessProfileService {
             profile.setProfilePictureURL(supabaseStorageService.uploadPicture(profilePic, "/"+ userId + UUID.randomUUID() +"profilePic"));
         }
         if(backgroundPic != null){
-            System.out.println("SENDED BACKGROUND PICTURE");
             profile.setBackgroundPictureURL(supabaseStorageService.uploadPicture(backgroundPic, "/"+ userId + UUID.randomUUID() + "backgroundPic"));
         }
-
-        System.out.println("UPLOADED PICTURES");
     }
 
     public void updateBusinessProfile(BusinessProfileDTO dto) {

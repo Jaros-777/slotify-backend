@@ -37,8 +37,5 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public void validateUser() {}
 
-    @GetMapping
-    public ClientDetailsDTO getClientDetails(@RequestHeader("Authorization") String authHeader) {
-        return authService.getClientDetails(authHeader);
-    }
+
 }
