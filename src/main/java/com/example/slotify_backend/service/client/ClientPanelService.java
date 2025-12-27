@@ -2,9 +2,11 @@ package com.example.slotify_backend.service.client;
 
 import com.example.slotify_backend.dto.client.ClientBookingsDTO;
 import com.example.slotify_backend.dto.client.ClientDetailsDTO;
+import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.mapper.ClientDetailsMapper;
+import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import com.example.slotify_backend.service.company.JwtService;
@@ -26,6 +28,7 @@ public class ClientPanelService {
     private final ClientDetailsMapper clientDetailsMapper;
     private final SupabaseStorageService supabaseStorageService;
     private final EventRepository eventRepository;
+    private final ClientRepository clientRepository;
 
     public ClientDetailsDTO getClientDetails(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
@@ -57,8 +60,11 @@ public class ClientPanelService {
 
     public List<ClientBookingsDTO> getClientBookings(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
-        Long clientId = jwtService.getUserIdFromToken(token);
-        List<Event> events = eventRepository.findAllByClientId(clientId);
+        Long userId = jwtService.getUserIdFromToken(token);
+        Client client = clientRepository.findByUserAccountId(userId);
+
+
+        List<Event> events = eventRepository.findAllByClientId(client.getId());
         List<ClientBookingsDTO> clientBookingsDTO = new ArrayList<>();
         for (Event event : events) {
             clientBookingsDTO.add(clientDetailsMapper.toClientBookingDTO(event));
