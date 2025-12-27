@@ -151,20 +151,22 @@ public class AuthService implements UserDetailsService {
             serviceRepository.save(serviceEntity);
         } else {
 
-            Client client = clientRepository.findByEmail(dto.email());
-
             User user = new User(
-                    dto.name(), dto.email(), passwordEncoder.encode(dto.password()), CLIENT
+                    dto.name(), dto.email(), passwordEncoder.encode(dto.password()), CLIENT, dto.phone()
             );
-            user.setPhone(dto.phone());
             userRepository.save(user);
 
-            if(client != null) {
-                eventRepository.findAllByClientId(client.getId()).forEach(event -> {
-                    event.setClient(client);
-                });
-                clientRepository.deleteById(client.getId());
+            Client client = clientRepository.findByEmail(dto.email());
+            if(client==null){
+                client = new Client(dto.name(), dto.email(),dto.phone());
+            }else{
+                user.setEmail(client.getEmail());
+                user.setPhone(client.getPhone());
+                user.setName(client.getName());
             }
+
+            client.setUserAccount(user);
+            clientRepository.save(client);
 
 
         }

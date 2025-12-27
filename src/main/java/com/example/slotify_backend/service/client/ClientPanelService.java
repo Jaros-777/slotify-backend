@@ -1,8 +1,11 @@
 package com.example.slotify_backend.service.client;
 
+import com.example.slotify_backend.dto.client.ClientBookingsDTO;
 import com.example.slotify_backend.dto.client.ClientDetailsDTO;
+import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.mapper.ClientDetailsMapper;
+import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.UserRepository;
 import com.example.slotify_backend.service.company.JwtService;
 import com.example.slotify_backend.service.company.SupabaseStorageService;
@@ -11,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -20,6 +25,7 @@ public class ClientPanelService {
     private final UserRepository userRepository;
     private final ClientDetailsMapper clientDetailsMapper;
     private final SupabaseStorageService supabaseStorageService;
+    private final EventRepository eventRepository;
 
     public ClientDetailsDTO getClientDetails(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
@@ -48,4 +54,16 @@ public class ClientPanelService {
                 client.setPictureURL(url);
             }
     }
+
+    public List<ClientBookingsDTO> getClientBookings(String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long clientId = jwtService.getUserIdFromToken(token);
+        List<Event> events = eventRepository.findAllByClientId(clientId);
+        List<ClientBookingsDTO> clientBookingsDTO = new ArrayList<>();
+        for (Event event : events) {
+            clientBookingsDTO.add(clientDetailsMapper.toClientBookingDTO(event));
+        }
+        return clientBookingsDTO;
+
+    };
 }

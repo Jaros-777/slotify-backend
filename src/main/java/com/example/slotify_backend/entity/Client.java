@@ -27,14 +27,21 @@ public class Client{
     @NotBlank
     @Column(unique = true)
     private String email;
-    private String password;
     private Integer phone;
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User userAccount;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Event> events = new ArrayList<>();
 
     public Client(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+    public Client(String name, String email, Integer phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
     }
 
 }

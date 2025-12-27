@@ -1,5 +1,6 @@
 package com.example.slotify_backend.controller.client;
 
+import com.example.slotify_backend.dto.client.ClientBookingsDTO;
 import com.example.slotify_backend.dto.client.ClientDetailsDTO;
 import com.example.slotify_backend.dto.company.ServiceCreateDTO;
 import com.example.slotify_backend.service.client.ClientPanelService;
@@ -8,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/client")
@@ -32,6 +35,12 @@ public class ClientPanelController {
             @RequestPart(value = "clientPic", required = false) MultipartFile clientPic,
             @RequestHeader("Authorization") String authHeader){
         clientPanelService.uploadPictures(clientPic,authHeader);
+    }
+
+    @GetMapping
+    @RequestMapping("/bookings")
+    public List<ClientBookingsDTO> getClientBookings(@RequestHeader("Authorization") String authHeader) {
+        return clientPanelService.getClientBookings(authHeader);
     }
 
 }

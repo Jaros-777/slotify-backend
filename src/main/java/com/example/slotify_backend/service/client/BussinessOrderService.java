@@ -33,8 +33,7 @@ public class BussinessOrderService {
     }
 
     public void insertOrder( OrderResponseDTO orderDTO) {
-        System.out.println(orderDTO);
-        if(!orderDTO.loggedClient()){
+
             Client client = clientRepository.findByEmail(orderDTO.email());
             if(client == null){
                 client = new Client();
@@ -59,6 +58,5 @@ public class BussinessOrderService {
             event.setBookingStatus(BookingStatus.TO_BE_CONFIRMED);
             event.setDescription(orderDTO.description());
             eventRepository.save(event);
-        }
     }
 }
