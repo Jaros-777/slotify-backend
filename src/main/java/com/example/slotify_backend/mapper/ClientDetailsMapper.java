@@ -35,8 +35,6 @@ public class ClientDetailsMapper {
     }
 
     public ClientBookingsDTO toClientBookingDTO(Event event) {
-        System.out.println(event.getUser().getId());
-        System.out.println(event.getUser().getId());
         User businessUser = userRepository.findById(event.getUser().getId()).orElse(null);
         return new ClientBookingsDTO(
                 event.getId(),
