@@ -13,7 +13,6 @@ import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import com.example.slotify_backend.repository.UserRepository;
-import com.example.slotify_backend.service.company.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,6 @@ public class BussinessOrderService {
     private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
-    private final JwtService jwtService;
 
     public OrderDTO getAllDetailsByServiceId(Long serviceId) {
         return orderMapper.toDTO(serviceId);
