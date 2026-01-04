@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ClientDetailsDTO(
+        Long id,
         @NotBlank
         String name,
         @NotBlank

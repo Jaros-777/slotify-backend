@@ -1,0 +1,29 @@
+package com.example.slotify_backend.controller.company;
+
+import com.example.slotify_backend.dto.client.ClientDetailsDTO;
+import com.example.slotify_backend.dto.company.ClientDetailsAndHistoryReservationsDTO;
+import com.example.slotify_backend.service.company.ClientService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/admin/client")
+@AllArgsConstructor
+public class ClientController {
+    private final ClientService clientService;
+
+    @GetMapping
+    @RequestMapping("/{clientId}")
+    public ClientDetailsAndHistoryReservationsDTO getClientDetails(@PathVariable Long clientId) {
+        return clientService.getClientDetails(clientId);
+    }
+
+    @GetMapping
+    @RequestMapping("/all")
+    public List<ClientDetailsDTO> getAllClientDetails(@RequestHeader("Authorization") String authHeader) {
+        return clientService.getAllClientDetails(authHeader);
+    }
+
+}

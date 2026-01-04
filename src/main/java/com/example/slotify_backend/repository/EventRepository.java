@@ -12,4 +12,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllEventsByServiceEntity_Id(Long serviceId);
     List<Event> findAllByClientId(Long clientId);
     List<Event> findAllByServiceEntityIdAndStartDateBetween(Long serviceId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Event> findAllByUserId(Long userId);
 }

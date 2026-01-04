@@ -2,13 +2,19 @@ package com.example.slotify_backend.mapper;
 
 import com.example.slotify_backend.dto.client.ClientBookingsDTO;
 import com.example.slotify_backend.dto.client.ClientDetailsDTO;
+import com.example.slotify_backend.dto.company.ClientDetailsAndHistoryReservationsDTO;
+import com.example.slotify_backend.dto.company.ClientHistoryReservationDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
+import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ClientDetailsMapper {
@@ -20,13 +26,47 @@ public class ClientDetailsMapper {
     }
 
     public ClientDetailsDTO toDTO(User user) {
-        return new ClientDetailsDTO(
+        return  new ClientDetailsDTO(
+                null,
                 user.getName(),
                 user.getEmail(),
                 user.getPhone(),
                 user.getPictureURL()
+                );
+    }
+    public ClientDetailsAndHistoryReservationsDTO toDetailsAndHistoryReservationDTO(Client client, List<Event> events) {
+        List<ClientHistoryReservationDTO> historyReservationDTOs = new ArrayList<>();
+        events.forEach(event -> {
+            historyReservationDTOs.add(new ClientHistoryReservationDTO(
+                    event.getId(),
+                    event.getClient().getId(),
+                    event.getStartDate(),
+                    event.getEndDate(),
+                    event.getServiceEntity().getName()
+            ));
+        });
+
+
+        return  new ClientDetailsAndHistoryReservationsDTO(
+                client.getPhone(),
+                client.getEmail(),
+                client.getName(),
+                client.getId(),
+                historyReservationDTOs
         );
     }
+    public List<ClientDetailsDTO> toDTO(List<Client> clients) {
+        return clients.stream()
+                .map(client -> new ClientDetailsDTO(
+                        client.getId(),
+                        client.getName(),
+                        client.getEmail(),
+                        client.getPhone(),
+                        null
+                ))
+                .collect(Collectors.toList());
+    }
+
 
     public void updateDTO(ClientDetailsDTO dto, User user) {
         if (dto.name() != null) user.setName(dto.name());
