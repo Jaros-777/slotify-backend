@@ -25,5 +25,10 @@ public class ClientController {
     public List<ClientDetailsDTO> getAllClientDetails(@RequestHeader("Authorization") String authHeader) {
         return clientService.getAllClientDetails(authHeader);
     }
+    @GetMapping
+    @RequestMapping("/all/with-reservations")
+    public List<ClientDetailsAndHistoryReservationsDTO> getAllClientDetailsAndReservationHistory(@RequestHeader("Authorization") String authHeader) {
+        return clientService.getAllClientDetailsAndReservationHistory(authHeader);
+    }
 
 }

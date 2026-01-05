@@ -31,7 +31,7 @@ public class Client{
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User userAccount;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 
     public Client(String name, String email) {
