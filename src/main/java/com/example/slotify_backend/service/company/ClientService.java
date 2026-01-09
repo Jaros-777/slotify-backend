@@ -5,6 +5,7 @@ import com.example.slotify_backend.dto.company.ClientDetailsAndHistoryReservatio
 import com.example.slotify_backend.dto.company.ClientHistoryReservationDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
+import com.example.slotify_backend.entity.enums.BookingStatus;
 import com.example.slotify_backend.mapper.ClientDetailsMapper;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;
@@ -36,7 +37,7 @@ public class ClientService {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         List<Client> clients = new ArrayList<>();
-        eventRepository.findAllByUserId(userId).forEach(event -> {
+        eventRepository.findAllByUserIdAndBookingStatusNot(userId, BookingStatus.VACATION).forEach(event -> {
             Client client = event.getClient();
             if (!clients.contains(client)) {
                 clients.add(client);
@@ -52,7 +53,7 @@ public class ClientService {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
         List<Client> clients = new ArrayList<>();
-        eventRepository.findAllByUserId(userId).forEach(event -> {
+        eventRepository.findAllByUserIdAndBookingStatusNot(userId, BookingStatus.VACATION).forEach(event -> {
             Client client = event.getClient();
             if (!clients.contains(client)) {
                 clients.add(client);

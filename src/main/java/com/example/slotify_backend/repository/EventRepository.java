@@ -1,6 +1,8 @@
 package com.example.slotify_backend.repository;
 
 import com.example.slotify_backend.entity.Event;
+import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.EventType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -12,5 +14,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllEventsByServiceEntity_Id(Long serviceId);
     List<Event> findAllByClientId(Long clientId);
     List<Event> findAllByServiceEntityIdAndStartDateBetween(Long serviceId, LocalDateTime startDate, LocalDateTime endDate);
-    List<Event> findAllByUserId(Long userId);
+    List<Event> findAllByUserIdAndBookingStatusNot(Long userId, BookingStatus bookingStatus);
+
+    List<Event> findAllByUserIdAndBookingStatus(Long userId, BookingStatus bookingStatus);
 }

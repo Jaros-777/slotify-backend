@@ -4,6 +4,8 @@ import com.example.slotify_backend.dto.company.EventCreateDTO;
 import com.example.slotify_backend.dto.company.EventDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
+import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.EventType;
 import com.example.slotify_backend.mapper.EventMapper;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;

@@ -5,4 +5,5 @@ public enum BookingStatus {
     CONFIRMED,
     CLIENT_ARRIVED,
     CLIENT_DID_NOT_ARRIVE,
+    VACATION
 }

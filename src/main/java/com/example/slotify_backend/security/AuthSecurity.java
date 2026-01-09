@@ -44,6 +44,7 @@ public class AuthSecurity {
                         .requestMatchers("/availability/**").authenticated()
                         .requestMatchers("/client/**").authenticated()
                         .requestMatchers("/admin/client/**").authenticated()
+                        .requestMatchers("/vacation/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

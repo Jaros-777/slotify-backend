@@ -7,6 +7,7 @@ import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.EventType;
 import com.example.slotify_backend.entity.enums.Role;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.EventRepository;

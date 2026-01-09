@@ -1,6 +1,7 @@
 package com.example.slotify_backend.entity;
 
 import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.EventType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,19 +25,20 @@ public class Event {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = true)
     Client client;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", nullable = false)
+    @JoinColumn(name = "service_id", nullable = true)
     private ServiceEntity serviceEntity;
     @NotNull
     private LocalDateTime startDate;
     @NotNull
     private LocalDateTime endDate;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
     private String description;
+//    @Enumerated(EnumType.STRING)
+//    private EventType eventType;
 
     public Event(User user, Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
         this.user = user;
@@ -46,6 +48,14 @@ public class Event {
         this.endDate = endDate;
         this.bookingStatus = bookingStatus;
         this.description = description;
+    }
+
+    public Event(User user, LocalDateTime startDate, LocalDateTime endDate, String description, BookingStatus bookingStatus) {
+        this.user = user;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.bookingStatus = bookingStatus;
     }
 }
 

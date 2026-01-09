@@ -2,10 +2,13 @@ package com.example.slotify_backend.mapper;
 
 import com.example.slotify_backend.dto.company.EventCreateDTO;
 import com.example.slotify_backend.dto.company.EventDTO;
+import com.example.slotify_backend.dto.company.VacationDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.ServiceEntity;
 import com.example.slotify_backend.entity.User;
+import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.EventType;
 import com.example.slotify_backend.repository.ClientRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 
@@ -22,21 +25,35 @@ import java.util.stream.Collectors;
 public class EventMapper {
 
     private final ServiceRepository serviceRepository;
-    private final ClientRepository clientRepository;
     private final UserRepository userRepository;
 
     public EventDTO toDTO(Event event) {
-        return new EventDTO(
-                event.getId(),
-                event.getClient().getName(),
-                event.getClient().getEmail(),
-                event.getClient().getPhone(),
-                event.getServiceEntity().getId(),
-                event.getStartDate(),
-                event.getEndDate(),
-                event.getBookingStatus(),
-                event.getDescription()
-        );
+
+        if(event.getClient() != null){
+            return new EventDTO(
+                    event.getId(),
+                    event.getClient().getName(),
+                    event.getClient().getEmail(),
+                    event.getClient().getPhone(),
+                    event.getServiceEntity().getId(),
+                    event.getStartDate(),
+                    event.getEndDate(),
+                    event.getBookingStatus(),
+                    event.getDescription()
+            );
+        }else{
+            return new EventDTO(
+                    event.getId(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    event.getStartDate(),
+                    event.getEndDate(),
+                    event.getBookingStatus(),
+                    event.getDescription()
+            );
+        }
     }
 
     public List<EventDTO> toDTO(List<Event> events) {
@@ -55,6 +72,25 @@ public class EventMapper {
                 dto.endDate(),
                 dto.bookingStatus(),
                 dto.description()
+        );
+    }
+
+    public VacationDTO toVacationDTO(Event event) {
+
+        return new VacationDTO(
+                event.getId(),
+                event.getDescription(),
+                event.getStartDate(),
+                event.getEndDate()
+        );
+    }
+    public Event toEntity(VacationDTO dto, User user){
+        return new Event(
+                user,
+                dto.startDate(),
+                dto.endDate(),
+                dto.name(),
+                BookingStatus.VACATION
         );
     }
 
