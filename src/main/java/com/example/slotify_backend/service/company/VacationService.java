@@ -3,59 +3,71 @@ package com.example.slotify_backend.service.company;
 import com.example.slotify_backend.dto.company.VacationDTO;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.User;
+import com.example.slotify_backend.entity.Vacation;
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import com.example.slotify_backend.entity.enums.EventType;
 import com.example.slotify_backend.mapper.EventMapper;
+import com.example.slotify_backend.mapper.VacationMapper;
 import com.example.slotify_backend.repository.EventRepository;
 import com.example.slotify_backend.repository.UserRepository;
+import com.example.slotify_backend.repository.VacationRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class VacationService {
     private final JwtService jwtService;
     private final EventRepository eventRepository;
-    private final EventMapper eventMapper;
     private final UserRepository userRepository;
+    private final VacationRepository vacationRepository;
+    private final VacationMapper vacationMapper;
 
     public List<VacationDTO> getVacationList(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
-        List<Event> events = eventRepository.findAllByUserIdAndBookingStatus(userId, BookingStatus.VACATION);
         List<VacationDTO> vacationDTOList = new ArrayList<>();
-        events.forEach(event -> {
-            vacationDTOList.add(eventMapper.toVacationDTO(event));
+        List<Vacation> vacations = vacationRepository.findAllByUserId(userId);
+        vacations.forEach(vacation -> {
+            List<Event> eventsList = eventRepository.findAllByVacation(vacation);
+            List<Long> eventsIdList = eventsList.stream().map(Event::getId).collect(Collectors.toList());
+            vacationDTOList.add(vacationMapper.toDTO(vacation, eventsIdList));
         });
         return vacationDTOList;
     }
 
     @Transactional
-    public void createUpdateVacation(String authHeader,VacationDTO vacationDTO) {
+    public void createUpdateVacation(String authHeader, VacationDTO vacationDTO) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
-        System.out.println(vacationDTO.id());
-        if(vacationDTO.id() != null){
-            System.out.println("Update");
-            eventRepository.findById(vacationDTO.id()).ifPresent(event -> {
-                event.setStartDate(vacationDTO.startDate());
-                event.setEndDate(vacationDTO.endDate());
-                event.setDescription(vacationDTO.name());
-            });
-        }else{
-            System.out.println("New");
-            eventRepository.save(eventMapper.toEntity(vacationDTO,user));
-        }
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-    };
+        if (vacationDTO.id() != null) {
+            vacationRepository.findById(vacationDTO.id()).ifPresent(vacation -> {
+                eventRepository.deleteAll(eventRepository.findAllByVacation(vacation));
+                vacationRepository.delete(vacation);
+            });
+        }
+        Vacation vacation = new Vacation(vacationDTO.name(), vacationDTO.startDate(), vacationDTO.endDate(), user);
+        vacationRepository.save(vacation);
+        eventRepository.saveAll(vacationMapper.allToEventEntity(user, vacation));
+
+
+    }
+
+    ;
 
     public void deleteVacation(Long vacationId) {
-        eventRepository.deleteById(vacationId);
+        vacationRepository.findById(vacationId).ifPresent(vacation -> {
+            List<Event> events = eventRepository.findAllByVacation(vacation);
+
+            eventRepository.deleteAll(events);
+        });
+        vacationRepository.deleteById(vacationId);
     }
 }

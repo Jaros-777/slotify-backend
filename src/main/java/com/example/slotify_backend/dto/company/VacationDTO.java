@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record VacationDTO(
         Long id,
@@ -15,6 +16,7 @@ public record VacationDTO(
         LocalDateTime startDate,
         @NotNull
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-        LocalDateTime endDate
+        LocalDateTime endDate,
+        List<Long> eventsId
 ) {
 }

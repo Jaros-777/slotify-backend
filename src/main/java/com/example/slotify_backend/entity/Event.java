@@ -37,8 +37,9 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
     private String description;
-//    @Enumerated(EnumType.STRING)
-//    private EventType eventType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vacation_id")
+    private Vacation vacation;
 
     public Event(User user, Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
         this.user = user;
@@ -50,12 +51,13 @@ public class Event {
         this.description = description;
     }
 
-    public Event(User user, LocalDateTime startDate, LocalDateTime endDate, String description, BookingStatus bookingStatus) {
+    public Event(User user, LocalDateTime startDate, LocalDateTime endDate, String description, BookingStatus bookingStatus, Vacation vacation) {
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.bookingStatus = bookingStatus;
+        this.vacation = vacation;
     }
 }
 
