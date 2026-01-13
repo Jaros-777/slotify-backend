@@ -5,13 +5,16 @@ import com.example.slotify_backend.dto.client.OrderDTO;
 import com.example.slotify_backend.dto.client.OrderResponseDTO;
 import com.example.slotify_backend.entity.*;
 import com.example.slotify_backend.entity.enums.BookingStatus;
+import com.example.slotify_backend.entity.enums.NotificationType;
 import com.example.slotify_backend.mapper.OrderMapper;
 import com.example.slotify_backend.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +26,7 @@ public class BussinessOrderService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final VacationRepository vacationRepository;
+    private final NotificationRepository notificationRepository;
 
     public OrderDTO getAllDetailsByServiceId(Long serviceId) {
         return orderMapper.toDTO(serviceId);
@@ -54,6 +58,18 @@ public class BussinessOrderService {
             event.setBookingStatus(BookingStatus.TO_BE_CONFIRMED);
             event.setDescription(orderDTO.description());
             eventRepository.save(event);
+
+
+            Notification notification = new Notification(
+                    false,
+                    service,
+                    event,
+                    LocalDateTime.now(),
+                    NotificationType.BOOKING,
+                    client,
+                    user
+            );
+            notificationRepository.save(notification);
     }
 
     public List<BookedHoursEventDTO> getBookedHoursEvents (Long serviceId, LocalDateTime chosenDay) {
