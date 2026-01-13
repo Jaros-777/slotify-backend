@@ -30,7 +30,7 @@ public class BussinessOrderController {
     }
 
     @GetMapping("/booked/{serviceId}/{chosenDay}")
-    public List<BookedHoursEventDTO> getBookedHoursEvents(@PathVariable("serviceId") Long serivceId, @PathVariable("chosenDay") LocalDateTime chosenDay){
-       return bussinessOrderService.getBookedHoursEvents(serivceId,chosenDay);
+    public List<BookedHoursEventDTO> getBookedHoursEvents( @PathVariable("serviceId") Long serviceId, @PathVariable("chosenDay") LocalDateTime chosenDay){
+       return bussinessOrderService.getBookedHoursEvents(serviceId,chosenDay);
     }
 }

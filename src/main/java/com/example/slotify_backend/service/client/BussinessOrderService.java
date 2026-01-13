@@ -3,16 +3,10 @@ package com.example.slotify_backend.service.client;
 import com.example.slotify_backend.dto.client.BookedHoursEventDTO;
 import com.example.slotify_backend.dto.client.OrderDTO;
 import com.example.slotify_backend.dto.client.OrderResponseDTO;
-import com.example.slotify_backend.entity.Client;
-import com.example.slotify_backend.entity.Event;
-import com.example.slotify_backend.entity.ServiceEntity;
-import com.example.slotify_backend.entity.User;
+import com.example.slotify_backend.entity.*;
 import com.example.slotify_backend.entity.enums.BookingStatus;
 import com.example.slotify_backend.mapper.OrderMapper;
-import com.example.slotify_backend.repository.ClientRepository;
-import com.example.slotify_backend.repository.EventRepository;
-import com.example.slotify_backend.repository.ServiceRepository;
-import com.example.slotify_backend.repository.UserRepository;
+import com.example.slotify_backend.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +22,7 @@ public class BussinessOrderService {
     private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final VacationRepository vacationRepository;
 
     public OrderDTO getAllDetailsByServiceId(Long serviceId) {
         return orderMapper.toDTO(serviceId);
@@ -66,10 +61,15 @@ public class BussinessOrderService {
         LocalDateTime endOfDay = chosenDay.withHour(23).withMinute(59).withSecond(59);
 
         List<Event> bookedEvents = eventRepository.findAllByServiceEntityIdAndStartDateBetween(serviceId, startOfDay,endOfDay);
+        Long userId = serviceRepository.findById(serviceId).get().getUser().getId();
+        List<Event> vacations = eventRepository.findAllByUserIdAndStartDateBetweenAndBookingStatus(userId, startOfDay, endOfDay, BookingStatus.VACATION);
         List<BookedHoursEventDTO> bookedHoursEvents = new ArrayList<>();
 
         bookedEvents.forEach(event -> {
-            bookedHoursEvents.add(new BookedHoursEventDTO(event.getStartDate()));
+            bookedHoursEvents.add(new BookedHoursEventDTO(event.getStartDate(), event.getEndDate()));
+        });
+        vacations.forEach(vacation -> {
+            bookedHoursEvents.add(new BookedHoursEventDTO(vacation.getStartDate(), vacation.getEndDate()));
         });
 
 
