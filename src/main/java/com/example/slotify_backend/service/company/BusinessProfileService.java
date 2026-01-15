@@ -9,9 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,7 +63,7 @@ public class BusinessProfileService {
     public void updateBusinessProfile(BusinessProfileDTO dto) {
 
         businessProfileRepository.findById(dto.id()).ifPresent(businessProfile -> {
-            businessProfileMapper.updateDTO(dto, businessProfile);
+            businessProfileMapper.updateBusinessProfileDTO(dto, businessProfile);
             businessProfileRepository.save(businessProfile);
         });
     };

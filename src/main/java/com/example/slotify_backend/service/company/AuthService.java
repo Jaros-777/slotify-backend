@@ -5,6 +5,7 @@ import com.example.slotify_backend.dto.company.TokenResponeDTO;
 import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.company.UserRequestRegisterDTO;
 import com.example.slotify_backend.entity.*;
+import com.example.slotify_backend.entity.BusinessAddress;
 import com.example.slotify_backend.entity.enums.Role;
 import com.example.slotify_backend.exception.UserAlreadyExistException;
 import com.example.slotify_backend.mapper.ClientDetailsMapper;
@@ -36,6 +37,8 @@ public class AuthService implements UserDetailsService {
     private BusinessProfileRepository businessProfileRepository;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private BusinessAddressRepository businessAddressRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -131,9 +134,14 @@ public class AuthService implements UserDetailsService {
             availabiltyRepository.save(availability6);
 
 
+            BusinessAddress businessAddress = new BusinessAddress();
+            businessAddressRepository.save(businessAddress);
+
+
             BusinessProfile businessProfile = new BusinessProfile(
                     user,
-                    dto.businessName()
+                    dto.businessName(),
+                    businessAddress
             );
             businessProfileRepository.save(businessProfile);
             user.setBusinessProfile(businessProfile);
@@ -149,6 +157,9 @@ public class AuthService implements UserDetailsService {
                     false
             );
             serviceRepository.save(serviceEntity);
+
+
+
         } else {
 
             User user = new User(

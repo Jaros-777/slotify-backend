@@ -32,9 +32,13 @@ public class BusinessProfile {
     private String facebookURL;
     private String profilePictureURL;
     private String backgroundPictureURL;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "business_address_id", nullable = false)
+    private BusinessAddress businessAddress;
 
-    public BusinessProfile(User user ,String name) {
+    public BusinessProfile(User user ,String name, BusinessAddress businessAddress) {
         this.user = user;
         this.name = name;
+        this.businessAddress = businessAddress;
     }
 }
