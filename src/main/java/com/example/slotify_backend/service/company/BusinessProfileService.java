@@ -1,7 +1,7 @@
 package com.example.slotify_backend.service.company;
 
-import com.example.slotify_backend.dto.company.BusinessProfileDTO;
 import com.example.slotify_backend.dto.company.BusinessProfileNameDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileWithAddressDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.mapper.BusinessProfileMapper;
 import com.example.slotify_backend.repository.BusinessProfileRepository;
@@ -20,7 +20,7 @@ public class BusinessProfileService {
     private final BusinessProfileMapper businessProfileMapper;
     private final SupabaseStorageService supabaseStorageService;
 
-    public BusinessProfileDTO getBusinessProfileDetails(String authHeader){
+    public BusinessProfileWithAddressDTO getBusinessProfileDetails(String authHeader){
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
@@ -60,11 +60,9 @@ public class BusinessProfileService {
         }
     }
 
-    public void updateBusinessProfile(BusinessProfileDTO dto) {
-
-        businessProfileRepository.findById(dto.id()).ifPresent(businessProfile -> {
+    public void updateBusinessProfile(BusinessProfileWithAddressDTO dto) {
+        businessProfileRepository.findById(dto.getId()).ifPresent(businessProfile -> {
             businessProfileMapper.updateBusinessProfileDTO(dto, businessProfile);
-            businessProfileRepository.save(businessProfile);
         });
     };
 }

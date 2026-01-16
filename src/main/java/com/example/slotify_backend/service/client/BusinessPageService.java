@@ -1,8 +1,8 @@
 package com.example.slotify_backend.service.client;
 
 import com.example.slotify_backend.dto.company.AvailabilityDTO;
-import com.example.slotify_backend.dto.company.BusinessProfileDTO;
 import com.example.slotify_backend.dto.client.BusinessProfileWithServicesDTO;
+import com.example.slotify_backend.dto.company.BusinessProfileWithAddressDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.ServiceEntity;
@@ -32,7 +32,7 @@ public class BusinessPageService {
     public BusinessProfileWithServicesDTO getBusinessProfileDetails(String businessName) {
          BusinessProfile businessProfile = businessProfileRepository.findByNameIgnoreCase(businessName).orElseThrow(()-> new EntityNotFoundException(businessName));
 
-         BusinessProfileDTO businessProfileDTO = businessProfileMapper.toDTO(businessProfile);
+         BusinessProfileWithAddressDTO businessProfileDTO = businessProfileMapper.toDTO(businessProfile);
 
          List<ServiceEntity> services = serviceRepository.findAllByUserId(businessProfile.getUser().getId());
          List<ServiceDTO> serviceDto = serviceMapper.toDTO(services);

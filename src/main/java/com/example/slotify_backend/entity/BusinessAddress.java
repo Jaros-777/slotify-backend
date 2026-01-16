@@ -23,14 +23,4 @@ public class BusinessAddress {
     private String city;
     private String postalCode;
     private String note;
-
-    public BusinessAddress(String note, String postalCode, String city, String street, String houseNumber, Double lng, Double lat) {
-        this.note = note;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.lng = lng;
-        this.lat = lat;
-    }
 }
