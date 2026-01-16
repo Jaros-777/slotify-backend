@@ -41,9 +41,12 @@ public class ClientPanelService {
     public void updateClientDetails(ClientDetailsDTO clientDetailsDTO, String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long clientId = jwtService.getUserIdFromToken(token);
-        User client = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found"));
-        clientDetailsMapper.updateDTO(clientDetailsDTO, client);
-        userRepository.save(client);
+        User userAccount = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found"));
+        Client clientAccount = clientRepository.findByUserAccountId(clientId);
+
+
+        clientDetailsMapper.updateEntities(clientDetailsDTO, userAccount,clientAccount);
+        userRepository.save(userAccount);
     }
 
     @Transactional

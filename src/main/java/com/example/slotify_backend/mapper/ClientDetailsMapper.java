@@ -68,10 +68,19 @@ public class ClientDetailsMapper {
     }
 
 
-    public void updateDTO(ClientDetailsDTO dto, User user) {
-        if (dto.name() != null) user.setName(dto.name());
-        if (dto.email() != null) user.setEmail(dto.email());
-        if (dto.phone() != null) user.setPhone(dto.phone());
+    public void updateEntities(ClientDetailsDTO dto, User user, Client client) {
+        if (dto.name() != null){
+            user.setName(dto.name());
+            client.setName(dto.name());
+        }
+        if (dto.email() != null){
+            user.setEmail(dto.email());
+            client.setEmail(dto.email());
+        }
+        if (dto.phone() != null){
+            user.setPhone(dto.phone());
+            client.setPhone(dto.phone());
+        }
     }
 
     public ClientBookingsDTO toClientBookingDTO(Event event) {
