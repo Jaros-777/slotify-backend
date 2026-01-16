@@ -1,7 +1,9 @@
 package com.example.slotify_backend.mapper;
 
+import com.example.slotify_backend.dto.company.NotificationAndBusinessImgUrlDTO;
 import com.example.slotify_backend.dto.company.NotificationDTO;
 import com.example.slotify_backend.entity.Notification;
+import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.entity.enums.NotificationType;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Component
 public class NotificationMapper {
 
-    public List<NotificationDTO> toEntity(List<Notification> notifications) {
+    public NotificationAndBusinessImgUrlDTO toEntity(List<Notification> notifications, String businessImgUrl) {
         List<NotificationDTO> dtos = new ArrayList<>();
 
         notifications.forEach(notification -> {
@@ -27,7 +29,11 @@ public class NotificationMapper {
                     notification.getIsReaded()
             ));
         });
-        return dtos;
+
+        return new NotificationAndBusinessImgUrlDTO(
+                businessImgUrl,
+                dtos
+        );
     };
 
 }

@@ -1,13 +1,15 @@
 package com.example.slotify_backend.service.company;
 
+import com.example.slotify_backend.dto.company.NotificationAndBusinessImgUrlDTO;
 import com.example.slotify_backend.dto.company.NotificationDTO;
+import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.mapper.NotificationMapper;
+import com.example.slotify_backend.repository.BusinessProfileRepository;
 import com.example.slotify_backend.repository.NotificationRepository;
+import com.example.slotify_backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -16,12 +18,15 @@ public class NotificationService {
     private final JwtService jwtService;
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
+    private final UserRepository userRepository;
+    private final BusinessProfileRepository businessProfileRepository;
 
-    public List<NotificationDTO> getAllNotifications(String authHeader) {
+    public NotificationAndBusinessImgUrlDTO getAllNotifications(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
+        String businessImgUrl = businessProfileRepository.findByUserId(userId).getProfilePictureURL();
 
-        return notificationMapper.toEntity(notificationRepository.findAllByUser_Id(userId));
+        return notificationMapper.toEntity(notificationRepository.findAllByUser_Id(userId),businessImgUrl);
     }
 
     @Transactional

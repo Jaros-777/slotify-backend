@@ -1,5 +1,6 @@
 package com.example.slotify_backend.controller.company;
 
+import com.example.slotify_backend.dto.company.NotificationAndBusinessImgUrlDTO;
 import com.example.slotify_backend.dto.company.NotificationDTO;
 import com.example.slotify_backend.service.company.NotificationService;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @GetMapping
-    public List<NotificationDTO> getAllNotifications(@RequestHeader("Authorization") String authHeader) {
+    public NotificationAndBusinessImgUrlDTO getAllNotifications(@RequestHeader("Authorization") String authHeader) {
         return notificationService.getAllNotifications(authHeader);
     }
 
