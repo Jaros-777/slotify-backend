@@ -126,7 +126,7 @@ For run application:
 #Delete old database - recomended for first use
 docker compose down -v
 
-@Compose backend with database
+#Compose backend with database
 docker compose up --build
 ```
 
