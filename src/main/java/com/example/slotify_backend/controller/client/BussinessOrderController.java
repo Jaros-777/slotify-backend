@@ -4,6 +4,7 @@ import com.example.slotify_backend.dto.client.BookedHoursEventDTO;
 import com.example.slotify_backend.dto.client.OrderDTO;
 import com.example.slotify_backend.dto.client.OrderResponseDTO;
 import com.example.slotify_backend.service.client.BussinessOrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Tag(name = "Order", description = "Order reservation operations")
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor

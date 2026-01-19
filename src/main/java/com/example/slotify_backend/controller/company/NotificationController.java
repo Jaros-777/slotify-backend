@@ -3,12 +3,14 @@ package com.example.slotify_backend.controller.company;
 import com.example.slotify_backend.dto.company.NotificationAndBusinessImgUrlDTO;
 import com.example.slotify_backend.dto.company.NotificationDTO;
 import com.example.slotify_backend.service.company.NotificationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Notification", description = "Notification operations")
 @RestController
 @RequestMapping("/notification")
 @AllArgsConstructor

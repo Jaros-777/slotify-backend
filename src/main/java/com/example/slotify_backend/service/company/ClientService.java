@@ -2,7 +2,6 @@ package com.example.slotify_backend.service.company;
 
 import com.example.slotify_backend.dto.client.ClientDetailsDTO;
 import com.example.slotify_backend.dto.company.ClientDetailsAndHistoryReservationsDTO;
-import com.example.slotify_backend.dto.company.ClientHistoryReservationDTO;
 import com.example.slotify_backend.entity.Client;
 import com.example.slotify_backend.entity.Event;
 import com.example.slotify_backend.entity.enums.BookingStatus;

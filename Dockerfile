@@ -5,9 +5,10 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-
 FROM eclipse-temurin:20-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+
+ENTRYPOINT ["java","-jar","app.jar","--spring.profiles.active=docker"]
+

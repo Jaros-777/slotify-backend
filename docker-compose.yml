@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    container_name: slotify-db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: .
+    container_name: slotify-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+      LOCAL_DB_NAME: ${DOCKER_DB_NAME:-postgres}
+      LOCAL_DB_USERNAME: ${DOCKER_DB_USERNAME:-postgres}
+      LOCAL_DB_PASSWORD: ${DOCKER_DB_PASSWORD:-postgres}
+
+      SUPABASE_BUCKET_URL: ${SUPABASE_BUCKET_URL:-http://localhost}
+      SUPABASE_BUCKET_KEY: ${SUPABASE_BUCKET_KEY:-dummy-key}
+      SUPABASE_BUCKET_NAME: ${SUPABASE_BUCKET_NAME:-dummy-bucket}
+
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-verylongsecretkeythatis32charsverylongsecretkeythatis32chars}
+    depends_on:
+      - db
+
+volumes:
+  db_data:

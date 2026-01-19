@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    url: jdbc:postgresql://db:5432/${DOCKER_DB_NAME:postgres}
+    username: ${DOCKER_DB_USERNAME:postgres}
+    password: ${DOCKER_DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

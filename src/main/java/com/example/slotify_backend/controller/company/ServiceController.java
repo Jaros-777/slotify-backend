@@ -3,6 +3,7 @@ package com.example.slotify_backend.controller.company;
 import com.example.slotify_backend.dto.company.ServiceCreateDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.service.company.ServiceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Tag(name = "Service", description = "Service operations")
 @RestController
 @RequestMapping("/service")
 @AllArgsConstructor

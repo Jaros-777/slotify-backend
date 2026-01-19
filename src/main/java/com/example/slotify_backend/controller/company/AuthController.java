@@ -5,11 +5,12 @@ import com.example.slotify_backend.dto.company.TokenResponeDTO;
 import com.example.slotify_backend.dto.company.UserRequestLoginDTO;
 import com.example.slotify_backend.dto.company.UserRequestRegisterDTO;
 import com.example.slotify_backend.service.company.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-
+@Tag(name = "Auth", description = "Auth operations")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

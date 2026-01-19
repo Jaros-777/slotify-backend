@@ -2,6 +2,7 @@ package com.example.slotify_backend.controller.company;
 
 import com.example.slotify_backend.dto.company.VacationDTO;
 import com.example.slotify_backend.service.company.VacationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Vacation", description = "User vacations operations")
 @RestController
 @RequestMapping("/vacation")
 @AllArgsConstructor

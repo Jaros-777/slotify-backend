@@ -1,10 +1,12 @@
 package com.example.slotify_backend.dto.company;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
+@Schema(description = "Representation of notification and business profile picture response")
 @Getter
 @Setter
 public class NotificationAndBusinessImgUrlDTO {

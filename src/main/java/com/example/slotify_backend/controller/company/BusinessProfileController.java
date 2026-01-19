@@ -3,12 +3,14 @@ package com.example.slotify_backend.controller.company;
 import com.example.slotify_backend.dto.company.BusinessProfileNameDTO;
 import com.example.slotify_backend.dto.company.BusinessProfileWithAddressDTO;
 import com.example.slotify_backend.service.company.BusinessProfileService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@Tag(name = "Business Profile", description = "Business profile operations")
 @RestController
 @RequestMapping("/business-profile")
 @AllArgsConstructor

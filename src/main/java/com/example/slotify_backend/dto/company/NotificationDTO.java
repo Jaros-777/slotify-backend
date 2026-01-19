@@ -2,12 +2,14 @@ package com.example.slotify_backend.dto.company;
 
 import com.example.slotify_backend.entity.enums.NotificationType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "Representation of notification response")
 public record NotificationDTO(
         @NotNull
         Long id,

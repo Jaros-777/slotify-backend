@@ -2,11 +2,13 @@ package com.example.slotify_backend.dto.client;
 
 import com.example.slotify_backend.dto.company.AvailabilityDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
+@Schema(description = "Representation of order reservation")
 @Getter
 @Setter
 public class OrderDTO {

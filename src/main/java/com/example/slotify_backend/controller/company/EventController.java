@@ -3,6 +3,7 @@ package com.example.slotify_backend.controller.company;
 import com.example.slotify_backend.dto.company.EventCreateDTO;
 import com.example.slotify_backend.dto.company.EventDTO;
 import com.example.slotify_backend.service.company.EventService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Tag(name = "Event", description = "Event operations")
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
