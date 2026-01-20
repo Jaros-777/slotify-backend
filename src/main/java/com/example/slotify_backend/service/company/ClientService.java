@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,15 +23,15 @@ public class ClientService {
     private final ClientDetailsMapper clientDetailsMapper;
     private final ClientRepository clientRepository;
 
-    public ClientDetailsAndHistoryReservationsDTO getClientDetails(Long clientId) {
+    public ClientDetailsAndHistoryReservationsDTO getClientDetails(String authHeader,Long clientId) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        Long userId = jwtService.getUserIdFromToken(token);
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
-        List<Event> events = new ArrayList<>(eventRepository.findAllByClientId(client.getId()));
+        List<Event> events = new ArrayList<>(eventRepository.findAllByClientIdAndUserId(client.getId(),userId));
 
         return clientDetailsMapper.toDetailsAndHistoryReservationDTO(client, events);
 
     }
-
-    ;
 
     public List<ClientDetailsDTO> getAllClientDetails(String authHeader) {
         String token = authHeader.replace("Bearer ", "").trim();
@@ -61,9 +62,10 @@ public class ClientService {
 
         List<ClientDetailsAndHistoryReservationsDTO> dtos = new ArrayList<>();
         clients.forEach(client -> {
-                List<Event> evets = client.getEvents();
-            System.out.println(evets.size());
-                dtos.add(clientDetailsMapper.toDetailsAndHistoryReservationDTO(client, evets));
+                List<Event> events = client.getEvents().stream()
+                        .filter(event -> event.getUser().getId().equals(userId))
+                        .collect(Collectors.toList());
+                dtos.add(clientDetailsMapper.toDetailsAndHistoryReservationDTO(client, events));
         });
 
         return dtos;

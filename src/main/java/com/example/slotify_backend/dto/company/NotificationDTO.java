@@ -15,7 +15,6 @@ public record NotificationDTO(
         Long id,
         @NotBlank
         String clientName,
-        @NotBlank
         String clientImgUrl,
         @NotBlank
         NotificationType type,

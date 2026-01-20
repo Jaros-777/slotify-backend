@@ -18,8 +18,8 @@ public class ClientController {
 
     @GetMapping
     @RequestMapping("/{clientId}")
-    public ClientDetailsAndHistoryReservationsDTO getClientDetails(@PathVariable Long clientId) {
-        return clientService.getClientDetails(clientId);
+    public ClientDetailsAndHistoryReservationsDTO getClientDetails(@RequestHeader("Authorization") String authHeader,@PathVariable Long clientId) {
+        return clientService.getClientDetails(authHeader,clientId);
     }
 
     @GetMapping

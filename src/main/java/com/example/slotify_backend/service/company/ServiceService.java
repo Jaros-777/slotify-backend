@@ -4,8 +4,10 @@ import com.example.slotify_backend.dto.company.ServiceCreateDTO;
 import com.example.slotify_backend.dto.company.ServiceDTO;
 import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.Event;
+import com.example.slotify_backend.entity.Notification;
 import com.example.slotify_backend.mapper.ServiceMapper;
 import com.example.slotify_backend.repository.EventRepository;
+import com.example.slotify_backend.repository.NotificationRepository;
 import com.example.slotify_backend.repository.ServiceRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class ServiceService {
     private final JwtService jwtService;
     private final EventRepository eventRepository;
     private final SupabaseStorageService storageService;
+    private final NotificationRepository notificationRepository;
 
     public List<ServiceDTO> getAllServicesByUser(String authHeader) {
 
@@ -55,7 +58,8 @@ public class ServiceService {
             for (Event event : eventsList) {
                 event.setServiceEntity(defaultService);
             }
-            eventRepository.saveAll(eventsList);
+            List<Notification> notifications = notificationRepository.findAllByService_Id(serviceId);
+            notificationRepository.deleteAll(notifications);
         }
 
         serviceRepository.deleteById(serviceId);

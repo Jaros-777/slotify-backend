@@ -2,6 +2,7 @@ package com.example.slotify_backend.service.company;
 
 import com.example.slotify_backend.dto.company.NotificationAndBusinessImgUrlDTO;
 import com.example.slotify_backend.dto.company.NotificationDTO;
+import com.example.slotify_backend.entity.BusinessProfile;
 import com.example.slotify_backend.entity.User;
 import com.example.slotify_backend.mapper.NotificationMapper;
 import com.example.slotify_backend.repository.BusinessProfileRepository;

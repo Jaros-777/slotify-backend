@@ -17,11 +17,15 @@ public class NotificationMapper {
     public NotificationAndBusinessImgUrlDTO toEntity(List<Notification> notifications, String businessImgUrl) {
         List<NotificationDTO> dtos = new ArrayList<>();
 
+
         notifications.forEach(notification -> {
+
             dtos.add(new NotificationDTO(
                     notification.getId(),
                     notification.getClient().getName(),
-                    notification.getClient().getUserAccount().getPictureURL(),
+                    notification.getClient().getUserAccount() != null
+                            ? notification.getClient().getUserAccount().getPictureURL()
+                            : null,
                     NotificationType.BOOKING,
                     notification.getDate(),
                     notification.getEvent().getStartDate(),
