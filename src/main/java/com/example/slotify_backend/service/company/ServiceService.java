@@ -37,11 +37,13 @@ public class ServiceService {
         return serviceMapper.toDTO(services);
     }
 
-    public void createNewService(ServiceCreateDTO dto, String authHeader ) {
+    public Long createNewService(ServiceCreateDTO dto, String authHeader ) {
         String token = authHeader.replace("Bearer ", "").trim();
         Long userId = jwtService.getUserIdFromToken(token);
 
-        serviceRepository.save(serviceMapper.toEntity(dto, userId, true));
+        ServiceEntity service = serviceMapper.toEntity(dto, userId, true);
+        serviceRepository.save(service);
+        return service.getId();
     }
 
     @Transactional

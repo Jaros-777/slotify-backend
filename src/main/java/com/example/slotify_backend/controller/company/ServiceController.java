@@ -27,8 +27,8 @@ public class ServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewService(@Valid @RequestBody ServiceCreateDTO dto, @RequestHeader("Authorization") String authHeader) {
-        serviceService.createNewService(dto, authHeader);
+    public Long createNewService(@Valid @RequestBody ServiceCreateDTO dto, @RequestHeader("Authorization") String authHeader) {
+        return serviceService.createNewService(dto, authHeader);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -46,8 +46,8 @@ public class ServiceController {
     @PostMapping("/picture")
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadPicture(
-            @RequestPart(value = "servicePic", required = false) MultipartFile servicePic,
-            @RequestPart(value = "id", required = false) String serviceId,
+            @RequestPart(value = "servicePic") MultipartFile servicePic,
+            @RequestPart(value = "id") String serviceId,
             @RequestHeader("Authorization") String authHeader){
         serviceService.uploadPictures(servicePic,authHeader,serviceId);
     }
