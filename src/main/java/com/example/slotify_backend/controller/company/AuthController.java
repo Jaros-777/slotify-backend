@@ -8,6 +8,7 @@ import com.example.slotify_backend.service.company.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Auth", description = "Auth operations")
@@ -36,7 +37,10 @@ public class AuthController {
 
     @GetMapping("/validate")
     @ResponseStatus(HttpStatus.OK)
-    public void validateUser() {}
+    public ResponseEntity<Void> validateUser() {
+        // This endpoint is intentionally left empty for health check / validation purposes.
+        return ResponseEntity.ok().build();
+    }
 
 
 }

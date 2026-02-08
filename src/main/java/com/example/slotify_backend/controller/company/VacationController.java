@@ -25,7 +25,6 @@ public class VacationController {
 
     @PostMapping
     public void createUpdateVacation(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody VacationDTO vacationDTO){
-        System.out.println(vacationDTO);
          vacationService.createUpdateVacation(authHeader, vacationDTO);
     }
 
