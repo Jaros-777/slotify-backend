@@ -42,15 +42,12 @@ public class BusinessProfileService {
         Long userId = jwtService.getUserIdFromToken(token);
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
 
-//        if(profile.getProfilePictureURL() != null && profilePic != null){
-//            supabaseStorageService.deletePicture(profile.getProfilePictureURL());
-//            System.out.println("DELETED PROFILE PICTURE");
-//        }
-//        if(profile.getBackgroundPictureURL() != null && backgroundPic != null){
-//            System.out.println("-------- " + profile.getBackgroundPictureURL());
-//            supabaseStorageService.deletePicture(profile.getBackgroundPictureURL());
-//            System.out.println("DELETED PROFILE BACKGROUND PICTURE");
-//        }
+        if(profile.getProfilePictureURL() != null && profilePic != null){
+            supabaseStorageService.deletePictureByPublicUrl(profile.getProfilePictureURL());
+        }
+        if(profile.getBackgroundPictureURL() != null && backgroundPic != null){
+            supabaseStorageService.deletePictureByPublicUrl(profile.getBackgroundPictureURL());
+        }
 
         if(profilePic != null){
             profile.setProfilePictureURL(supabaseStorageService.uploadPicture(profilePic, "/"+ userId + UUID.randomUUID() +"profilePic"));

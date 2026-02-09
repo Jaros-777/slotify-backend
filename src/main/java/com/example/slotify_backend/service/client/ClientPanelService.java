@@ -56,6 +56,9 @@ public class ClientPanelService {
         User client = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
             if(clientPic != null){
+                if(client.getPictureURL() != null){
+                    supabaseStorageService.deletePictureByPublicUrl(client.getPictureURL());
+                }
                 String url = supabaseStorageService.uploadPicture(clientPic, "/"+ userId + UUID.randomUUID() +"clientPic");
                 client.setPictureURL(url);
             }

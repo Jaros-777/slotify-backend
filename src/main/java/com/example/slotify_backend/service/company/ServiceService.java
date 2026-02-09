@@ -84,6 +84,9 @@ public class ServiceService {
 
         serviceRepository.findById(Long.valueOf(serviceId)).ifPresent(serviceEntity -> {
             if(servicePic != null){
+                if(serviceEntity.getServicePictureURL() != null){
+                    storageService.deletePictureByPublicUrl(serviceEntity.getServicePictureURL());
+                }
                 String url = storageService.uploadPicture(servicePic, "/"+ userId + UUID.randomUUID() +"servicePic");
                 serviceEntity.setServicePictureURL(url);
             }

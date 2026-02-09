@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class SupabaseStorageService {
@@ -46,25 +48,47 @@ public class SupabaseStorageService {
         }
 
     }
-    public void deletePicture(String path) {
+
+    public void deletePictureByPublicUrl(String publicUrl) {
         try {
-            String deleteUrl = supabaseUrl.trim() + "/storage/v1/object/" + supabaseBucket.trim() + "/" + path;
+            String path = extractPathFromPublicUrl(publicUrl);
+
+            String deleteUrl = supabaseUrl.trim()
+                    + "/storage/v1/object/"
+                    + supabaseBucket.trim()
+                    + "/"
+                    + path;
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(deleteUrl))
                     .header("Authorization", "Bearer " + supabaseKey.trim())
+                    .header("apikey", supabaseKey.trim())
                     .DELETE()
                     .build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response =
+                    httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                throw new RuntimeException("Delete failed: " + path + response.body());
+                throw new RuntimeException("Delete failed: " + response.body());
             }
 
         } catch (Exception e) {
             throw new RuntimeException("Error deleting from Supabase", e);
         }
     }
+
+
+    private String extractPathFromPublicUrl(String publicUrl) {
+        String marker = "/storage/v1/object/public/" + supabaseBucket + "/";
+        int index = publicUrl.indexOf(marker);
+
+        if (index == -1) {
+            throw new IllegalArgumentException("Invalid Supabase public URL");
+        }
+
+        return publicUrl.substring(index + marker.length());
+    }
+
 
 }
