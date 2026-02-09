@@ -16,19 +16,16 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
 
-    @GetMapping
-    @RequestMapping("/{clientId}")
+    @GetMapping("/{clientId}")
     public ClientDetailsAndHistoryReservationsDTO getClientDetails(@RequestHeader("Authorization") String authHeader,@PathVariable Long clientId) {
         return clientService.getClientDetails(authHeader,clientId);
     }
 
-    @GetMapping
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public List<ClientDetailsDTO> getAllClientDetails(@RequestHeader("Authorization") String authHeader) {
         return clientService.getAllClientDetails(authHeader);
     }
-    @GetMapping
-    @RequestMapping("/all/with-reservations")
+    @GetMapping("/all/with-reservations")
     public List<ClientDetailsAndHistoryReservationsDTO> getAllClientDetailsAndReservationHistory(@RequestHeader("Authorization") String authHeader) {
         return clientService.getAllClientDetailsAndReservationHistory(authHeader);
     }

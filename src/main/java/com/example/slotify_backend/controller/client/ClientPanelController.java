@@ -39,8 +39,7 @@ public class ClientPanelController {
         clientPanelService.uploadPictures(clientPic,authHeader);
     }
 
-    @GetMapping
-    @RequestMapping("/bookings")
+    @GetMapping("/bookings")
     public List<ClientBookingsDTO> getClientBookings(@RequestHeader("Authorization") String authHeader) {
         return clientPanelService.getClientBookings(authHeader);
     }
