@@ -23,7 +23,7 @@ public class BussinessOrderController {
     @GetMapping("{id}")
     public OrderDTO getAllServicesByUser(@PathVariable("id") Long serviceId){
         return bussinessOrderService.getAllDetailsByServiceId(serviceId);
-    };
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

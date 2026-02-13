@@ -18,7 +18,7 @@ public class NotificationMapper {
         List<NotificationDTO> dtos = new ArrayList<>();
 
 
-        notifications.forEach(notification -> {
+        notifications.forEach(notification ->
 
             dtos.add(new NotificationDTO(
                     notification.getId(),
@@ -31,13 +31,13 @@ public class NotificationMapper {
                     notification.getEvent().getStartDate(),
                     notification.getService().getName(),
                     notification.getIsReaded()
-            ));
-        });
+            ))
+        );
 
         return new NotificationAndBusinessImgUrlDTO(
                 businessImgUrl,
                 dtos
         );
-    };
+    }
 
 }

@@ -21,16 +21,14 @@ public class BusinessProfileService {
     private final SupabaseStorageService supabaseStorageService;
 
     public BusinessProfileWithAddressDTO getBusinessProfileDetails(String authHeader){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
         return businessProfileMapper.toDTO(profile);
     }
 
     public BusinessProfileNameDTO getBusinessName(String authHeader){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
         return businessProfileMapper.nameToDTO(profile);
@@ -38,8 +36,7 @@ public class BusinessProfileService {
 
     @Transactional
     public void uploadPictures(MultipartFile profilePic,MultipartFile backgroundPic,String authHeader){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         BusinessProfile profile = businessProfileRepository.findByUserId(userId);
 
         if(profile.getProfilePictureURL() != null && profilePic != null){

@@ -81,12 +81,12 @@ public class BussinessOrderService {
         List<Event> vacations = eventRepository.findAllByUserIdAndStartDateBetweenAndBookingStatus(userId, startOfDay, endOfDay, BookingStatus.VACATION);
         List<BookedHoursEventDTO> bookedHoursEvents = new ArrayList<>();
 
-        bookedEvents.forEach(event -> {
-            bookedHoursEvents.add(new BookedHoursEventDTO(event.getStartDate(), event.getEndDate()));
-        });
-        vacations.forEach(vacation -> {
-            bookedHoursEvents.add(new BookedHoursEventDTO(vacation.getStartDate(), vacation.getEndDate()));
-        });
+        bookedEvents.forEach(event ->
+            bookedHoursEvents.add(new BookedHoursEventDTO(event.getStartDate(), event.getEndDate()))
+        );
+        vacations.forEach(vacation ->
+            bookedHoursEvents.add(new BookedHoursEventDTO(vacation.getStartDate(), vacation.getEndDate()))
+        );
 
 
 

@@ -19,12 +19,10 @@ public class NotificationService {
     private final JwtService jwtService;
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
-    private final UserRepository userRepository;
     private final BusinessProfileRepository businessProfileRepository;
 
     public NotificationAndBusinessImgUrlDTO getAllNotifications(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         String businessImgUrl = businessProfileRepository.findByUserId(userId).getProfilePictureURL();
 
         return notificationMapper.toEntity(notificationRepository.findAllByUser_Id(userId),businessImgUrl);
@@ -39,8 +37,7 @@ public class NotificationService {
 
     @Transactional
     public void markAsReadedAllNotification(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         notificationRepository.findAllByUser_Id(userId).forEach(notification -> {
             notification.setIsReaded(true);
         });

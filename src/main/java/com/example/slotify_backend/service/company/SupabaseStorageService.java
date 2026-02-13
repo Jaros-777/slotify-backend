@@ -1,7 +1,9 @@
 package com.example.slotify_backend.service.company;
 
+import com.example.slotify_backend.exception.UploadFailedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
@@ -40,11 +42,11 @@ public class SupabaseStorageService {
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
                 return supabaseUrl.trim() + "/storage/v1/object/public/" + supabaseBucket.trim() + "/" + path;
             } else {
-                throw new RuntimeException("Upload failed: " + response.body());
+                throw new UploadFailedException("Upload failed: " + response.body());
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error uploading to Supabase", e);
+            throw new UploadFailedException("Error uploading to Supabase "+ e);
         }
 
     }
@@ -74,7 +76,7 @@ public class SupabaseStorageService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Error deleting from Supabase", e);
+            throw new UploadFailedException("Error deleting from Supabase "+ e);
         }
     }
 

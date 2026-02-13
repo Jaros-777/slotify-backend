@@ -19,13 +19,13 @@ public class AvailabilityController {
     private final AvailabilityService availabilityService;
 
     @GetMapping
-    public List<AvailabilityDTO> getAvailabilty(@RequestHeader("Authorization") String authHeader) {
-        return availabilityService.getAvailabilty(authHeader);
+    public List<AvailabilityDTO> getAvailability(@RequestHeader("Authorization") String authHeader) {
+        return availabilityService.getAvailability(authHeader);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateAvailabilty(@Valid @RequestBody List<AvailabilityDTO> availabilityDTO) {
-        availabilityService.updateAvailabilty( availabilityDTO);
+    public void updateAvailability(@Valid @RequestBody List<AvailabilityDTO> availabilityDTO) {
+        availabilityService.updateAvailability( availabilityDTO);
     }
 }

@@ -14,8 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserDTO getUser(String authHeader){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         User user = userRepository.findById(userId).orElse(null);
         return new UserDTO(
                 user.getName(),
@@ -25,8 +24,7 @@ public class UserService {
 
     @Transactional
     public void updateUser(String authHeader,UserDTO userDTO){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         User user = userRepository.findById(userId).orElse(null);
         if(userDTO.name() != null){
             user.setName(userDTO.name());

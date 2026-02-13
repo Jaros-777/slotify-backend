@@ -24,8 +24,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     public ClientDetailsAndHistoryReservationsDTO getClientDetails(String authHeader,Long clientId) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
         List<Event> events = new ArrayList<>(eventRepository.findAllByClientIdAndUserId(client.getId(),userId));
 
@@ -34,8 +33,7 @@ public class ClientService {
     }
 
     public List<ClientDetailsDTO> getAllClientDetails(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         List<Client> clients = new ArrayList<>();
         eventRepository.findAllByUserIdAndBookingStatusNot(userId, BookingStatus.VACATION).forEach(event -> {
             Client client = event.getClient();
@@ -50,8 +48,7 @@ public class ClientService {
     ;
 
     public List<ClientDetailsAndHistoryReservationsDTO> getAllClientDetailsAndReservationHistory(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         List<Client> clients = new ArrayList<>();
         eventRepository.findAllByUserIdAndBookingStatusNot(userId, BookingStatus.VACATION).forEach(event -> {
             Client client = event.getClient();

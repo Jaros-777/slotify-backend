@@ -40,5 +40,5 @@ public class BusinessPageService {
 
          return new BusinessProfileWithServicesDTO(businessProfileDTO, serviceDto, availabilityDTO);
 
-    };
+    }
 }

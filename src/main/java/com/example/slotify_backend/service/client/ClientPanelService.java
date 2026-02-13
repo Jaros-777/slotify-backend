@@ -31,16 +31,14 @@ public class ClientPanelService {
     private final ClientRepository clientRepository;
 
     public ClientDetailsDTO getClientDetails(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long clientId = jwtService.getUserIdFromToken(token);
+        Long clientId = jwtService.getUserIdFromAuthHeader(authHeader);
         User client = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found") );
 
         return clientDetailsMapper.toDTO(client);
     }
 
     public void updateClientDetails(ClientDetailsDTO clientDetailsDTO, String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long clientId = jwtService.getUserIdFromToken(token);
+        Long clientId = jwtService.getUserIdFromAuthHeader(authHeader);
         User userAccount = userRepository.findById(clientId).orElseThrow(() -> new RuntimeException("User not found"));
         Client clientAccount = clientRepository.findByUserAccountId(clientId);
 
@@ -51,8 +49,7 @@ public class ClientPanelService {
 
     @Transactional
     public void uploadPictures(MultipartFile clientPic, String authHeader){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         User client = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
             if(clientPic != null){
@@ -65,8 +62,7 @@ public class ClientPanelService {
     }
 
     public List<ClientBookingsDTO> getClientBookings(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         Client client = clientRepository.findByUserAccountId(userId);
 
 

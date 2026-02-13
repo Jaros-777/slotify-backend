@@ -36,8 +36,6 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private BusinessProfileRepository businessProfileRepository;
     @Autowired
-    private EventRepository eventRepository;
-    @Autowired
     private BusinessAddressRepository businessAddressRepository;
 
     @Override
@@ -61,7 +59,6 @@ public class AuthService implements UserDetailsService {
     private final ServiceRepository serviceRepository;
     private final AvailabiltyRepository availabiltyRepository;
     private final ClientRepository clientRepository;
-    private final ClientDetailsMapper clientDetailsMapper;
 
 
     @Transactional

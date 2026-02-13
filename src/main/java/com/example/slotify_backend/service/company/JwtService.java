@@ -42,14 +42,21 @@ public class JwtService {
         return claims.getSubject();
     }
 
-    public Long getUserIdFromToken(String token) {
+    public Long getUserIdFromAuthHeader(String authHeader) {
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid JWT token");
+        }
+
+        String token = authHeader.replace("Bearer ", "").trim();
+
+
         Claims claims = Jwts.parser()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("userId", Long.class);
-    }
+    };
 
 
 }

@@ -33,7 +33,6 @@ public class VacationMapper {
         for(int i = 0; i <= days; i++){
             LocalDateTime startDate = vacation.getStartDate().plusDays(i);
             LocalDateTime endDate = startDate.withHour(vacation.getEndDate().getHour()).withMinute(vacation.getEndDate().getMinute());
-            System.out.println(startDate + " " + endDate);
             events.add(new Event(
                     user,
                     startDate,
@@ -44,7 +43,7 @@ public class VacationMapper {
             ));
         }
         return events;
-    };
+    }
 
 
 }

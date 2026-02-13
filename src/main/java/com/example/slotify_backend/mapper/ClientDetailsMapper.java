@@ -36,15 +36,15 @@ public class ClientDetailsMapper {
     }
     public ClientDetailsAndHistoryReservationsDTO toDetailsAndHistoryReservationDTO(Client client, List<Event> events) {
         List<ClientHistoryReservationDTO> historyReservationDTOs = new ArrayList<>();
-        events.forEach(event -> {
+        events.forEach(event ->
             historyReservationDTOs.add(new ClientHistoryReservationDTO(
                     event.getId(),
                     event.getClient().getId(),
                     event.getStartDate(),
                     event.getEndDate(),
                     event.getServiceEntity().getName()
-            ));
-        });
+            ))
+        );
 
 
         return  new ClientDetailsAndHistoryReservationsDTO(

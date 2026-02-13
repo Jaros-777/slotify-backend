@@ -30,16 +30,14 @@ public class ServiceService {
 
     public List<ServiceDTO> getAllServicesByUser(String authHeader) {
 
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         List<ServiceEntity> services = serviceRepository.findAllByUserId(userId);
         return serviceMapper.toDTO(services);
     }
 
     public Long createNewService(ServiceCreateDTO dto, String authHeader ) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         ServiceEntity service = serviceMapper.toEntity(dto, userId, true);
         serviceRepository.save(service);
@@ -52,8 +50,7 @@ public class ServiceService {
 
 
         if (!eventsList.isEmpty()) {
-            String token = authHeader.replace("Bearer ", "").trim();
-            Long userId = jwtService.getUserIdFromToken(token);
+            Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
             ServiceEntity defaultService = serviceRepository.findByIsEditableAndUserId(false, userId);
 
@@ -68,8 +65,7 @@ public class ServiceService {
     }
 
     public void updateServiceById(ServiceDTO dto, String authHeader ) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         serviceRepository.findById(dto.id()).ifPresent(serviceEntity -> {
             serviceMapper.updateDTO(dto, serviceEntity, userId);
@@ -79,8 +75,7 @@ public class ServiceService {
 
     @Transactional
     public void uploadPictures(MultipartFile servicePic,String authHeader, String serviceId){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         serviceRepository.findById(Long.valueOf(serviceId)).ifPresent(serviceEntity -> {
             if(servicePic != null){

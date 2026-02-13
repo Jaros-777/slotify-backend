@@ -27,8 +27,7 @@ public class EventService {
     private final ClientRepository clientRepository;
 
     public List<EventDTO> getAllUserEventsInWeek(String authHeader,LocalDateTime startWeek){
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         LocalDateTime endDate = startWeek.plusDays(6).plusHours(23).plusMinutes(59).plusSeconds(59);
         List<Event> events = eventRepository.findAllByUserIdAndStartDateBetween(userId,startWeek,endDate);
@@ -37,8 +36,7 @@ public class EventService {
     }
 
     public void createNewEvent(EventCreateDTO dto,String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         Client client = clientRepository.findByEmail(dto.clientEmail());
 
         if(client == null){

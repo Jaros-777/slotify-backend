@@ -27,7 +27,7 @@ public class ServiceMapper {
                 dto.description(),
                 toIsEditable
         );
-    };
+    }
 
     public ServiceDTO toDTO(ServiceEntity entity) {
         return new ServiceDTO(

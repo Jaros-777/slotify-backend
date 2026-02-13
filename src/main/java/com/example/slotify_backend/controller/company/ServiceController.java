@@ -23,7 +23,7 @@ public class ServiceController {
     @GetMapping
     public List<ServiceDTO> getAllServicesByUser( @RequestHeader(value = "Authorization") String authHeader){
        return serviceService.getAllServicesByUser(authHeader);
-    };
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

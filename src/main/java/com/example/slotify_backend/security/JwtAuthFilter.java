@@ -35,6 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
+
             try {
                 String email = jwtService.extractEmail(jwt);
 
@@ -47,6 +48,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             } catch (Exception e) {
+                logger.warn(e.getMessage());
             }
         }
 

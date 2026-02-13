@@ -28,8 +28,7 @@ public class VacationService {
     private final VacationMapper vacationMapper;
 
     public List<VacationDTO> getVacationList(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         List<VacationDTO> vacationDTOList = new ArrayList<>();
         List<Vacation> vacations = vacationRepository.findAllByUserId(userId);
@@ -43,8 +42,7 @@ public class VacationService {
 
     @Transactional
     public void createUpdateVacation(String authHeader, VacationDTO vacationDTO) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         if (vacationDTO.id() != null) {

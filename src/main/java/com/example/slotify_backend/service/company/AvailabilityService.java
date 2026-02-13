@@ -17,21 +17,20 @@ public class AvailabilityService {
     private final JwtService jwtService;
     private final AvailabilityMapper availabilityMapper;
 
-    public List<AvailabilityDTO> getAvailabilty(String authHeader) {
-        String token = authHeader.replace("Bearer ", "").trim();
-        Long userId = jwtService.getUserIdFromToken(token);
+    public List<AvailabilityDTO> getAvailability(String authHeader) {
+        Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
 
         List<AvailabilityDTO> list = new ArrayList<>();
 
-        availabiltyRepository.findAllByUserId(userId).forEach(availabilty -> {
-            list.add(availabilityMapper.toDTO(availabilty));
+        availabiltyRepository.findAllByUserId(userId).forEach(availability -> {
+            list.add(availabilityMapper.toDTO(availability));
         });
         return list;
 
     }
 
     @Transactional
-    public void updateAvailabilty( List<AvailabilityDTO> availabilityDTO) {
+    public void updateAvailability( List<AvailabilityDTO> availabilityDTO) {
 
         for (AvailabilityDTO currentAvailability : availabilityDTO) {
             Availability current = availabiltyRepository.findById(currentAvailability.id());

@@ -21,18 +21,18 @@ public class BusinessProfileController {
     @GetMapping
     public BusinessProfileWithAddressDTO getBusinessProfileDetails(@RequestHeader("Authorization") String authHeader){
         return businessProfileService.getBusinessProfileDetails(authHeader);
-    };
+    }
 
     @GetMapping("/name")
     public BusinessProfileNameDTO getBusinessName(@RequestHeader("Authorization") String authHeader){
         return businessProfileService.getBusinessName(authHeader);
-    };
+    }
 
     @PostMapping("/pictures")
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadPictures(@RequestPart(value = "profilePic", required = false)MultipartFile profilePic,@RequestPart(value = "backgroundPic", required = false)MultipartFile backgroundPic,@RequestHeader("Authorization") String authHeader){
         businessProfileService.uploadPictures(profilePic,backgroundPic,authHeader);
-    };
+    }
 
 
     @PutMapping()
