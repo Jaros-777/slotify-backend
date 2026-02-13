@@ -75,63 +75,17 @@ public class AuthService implements UserDetailsService {
             );
             userRepository.save(user);
 
-            Availability availability0 = new Availability(
-                    false,
-                    "18:00",
-                    "08:00",
-                    0,
-                    user
-            );
-            Availability availability1 = new Availability(
-                    false,
-                    "18:00",
-                    "08:00",
-                    1,
-                    user
-            );
-            Availability availability2 = new Availability(
-                    false,
-                    "18:00",
-                    "08:00",
-                    2,
-                    user
-            );
-            Availability availability3 = new Availability(
-                    false,
-                    "18:00",
-                    "08:00",
-                    3,
-                    user
-            );
-            Availability availability4 = new Availability(
-                    false,
-                    "18:00",
-                    "08:00",
-                    4,
-                    user
-            );
-            Availability availability5 = new Availability(
-                    true,
-                    "18:00",
-                    "08:00",
-                    5,
-                    user
-            );
-            Availability availability6 = new Availability(
-                    true,
-                    "18:00",
-                    "08:00",
-                    6,
-                    user
-            );
+            for(int i =0; i<7; i++){
+                Availability availability = new Availability(
+                        false,
+                        "18:00",
+                        "08:00",
+                        i,
+                        user
+                );
+                availabiltyRepository.save(availability);
+            }
 
-            availabiltyRepository.save(availability0);
-            availabiltyRepository.save(availability1);
-            availabiltyRepository.save(availability2);
-            availabiltyRepository.save(availability3);
-            availabiltyRepository.save(availability4);
-            availabiltyRepository.save(availability5);
-            availabiltyRepository.save(availability6);
 
 
             BusinessAddress businessAddress = new BusinessAddress();
