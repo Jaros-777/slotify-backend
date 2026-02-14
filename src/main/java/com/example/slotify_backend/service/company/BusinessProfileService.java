@@ -55,8 +55,8 @@ public class BusinessProfileService {
     }
 
     public void updateBusinessProfile(BusinessProfileWithAddressDTO dto) {
-        businessProfileRepository.findById(dto.getId()).ifPresent(businessProfile -> {
-            businessProfileMapper.updateBusinessProfileDTO(dto, businessProfile);
-        });
-    };
+        businessProfileRepository.findById(dto.getId()).ifPresent(businessProfile ->
+            businessProfileMapper.updateBusinessProfileDTO(dto, businessProfile)
+        );
+    }
 }

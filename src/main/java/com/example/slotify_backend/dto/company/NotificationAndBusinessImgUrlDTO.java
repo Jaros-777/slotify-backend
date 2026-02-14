@@ -10,11 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 public class NotificationAndBusinessImgUrlDTO {
-    private String BusinessImgUrl;
+    private String businessImgUrl;
     private List<NotificationDTO> notificationDTO;
 
     public NotificationAndBusinessImgUrlDTO(String businessImgUrl, List<NotificationDTO> notificationDTO) {
-        BusinessImgUrl = businessImgUrl;
+        this.businessImgUrl = businessImgUrl;
         this.notificationDTO = notificationDTO;
     }
 }

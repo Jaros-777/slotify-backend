@@ -50,7 +50,7 @@ public class EventService {
             clientRepository.save(client);
         }
         eventRepository.save(eventMapper.toEntity(dto,userId, client));
-    };
+    }
 
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);

@@ -45,7 +45,7 @@ public class ClientService {
         return clientDetailsMapper.toDTO(clients);
     }
 
-    ;
+
 
     public List<ClientDetailsAndHistoryReservationsDTO> getAllClientDetailsAndReservationHistory(String authHeader) {
         Long userId = jwtService.getUserIdFromAuthHeader(authHeader);
@@ -68,5 +68,5 @@ public class ClientService {
         return dtos;
     }
 
-    ;
+
 }

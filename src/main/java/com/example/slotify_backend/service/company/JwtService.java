@@ -15,7 +15,7 @@ import java.util.Date;
 public class JwtService {
     @Value("${jwt_secret_key}")
     private String secret;
-    private final long expiration=3600;
+    private static final long EXPIRATION=3600L;
 
 
     private Key getSigningKey() {
@@ -28,7 +28,7 @@ public class JwtService {
                 .setSubject(email)
                 .claim("userId", userId)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plusSeconds(expiration)))
+                .setExpiration(Date.from(now.plusSeconds(EXPIRATION)))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -56,7 +56,7 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("userId", Long.class);
-    };
+    }
 
 
 }

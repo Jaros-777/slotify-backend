@@ -45,8 +45,11 @@ public class SupabaseStorageService {
                 throw new UploadFailedException("Upload failed: " + response.body());
             }
 
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new UploadFailedException("Upload was ", e);
         } catch (Exception e) {
-            throw new UploadFailedException("Error uploading to Supabase "+ e);
+            throw new UploadFailedException("Error uploading to Supabase", e);
         }
 
     }
@@ -72,11 +75,14 @@ public class SupabaseStorageService {
                     httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                throw new RuntimeException("Delete failed: " + response.body());
+                throw new UploadFailedException("Delete failed: " + response.body());
             }
 
-        } catch (Exception e) {
-            throw new UploadFailedException("Error deleting from Supabase "+ e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new UploadFailedException("Upload was ", e);
+        }catch (Exception e) {
+            throw new UploadFailedException("Error deleting from Supabase", e);
         }
     }
 

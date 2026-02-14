@@ -58,7 +58,6 @@ public class VacationService {
 
     }
 
-    ;
 
     public void deleteVacation(Long vacationId) {
         vacationRepository.findById(vacationId).ifPresent(vacation -> {

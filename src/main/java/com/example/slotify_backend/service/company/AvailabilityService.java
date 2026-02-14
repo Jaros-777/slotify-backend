@@ -22,9 +22,9 @@ public class AvailabilityService {
 
         List<AvailabilityDTO> list = new ArrayList<>();
 
-        availabiltyRepository.findAllByUserId(userId).forEach(availability -> {
-            list.add(availabilityMapper.toDTO(availability));
-        });
+        availabiltyRepository.findAllByUserId(userId).forEach(availability ->
+            list.add(availabilityMapper.toDTO(availability))
+        );
         return list;
 
     }
