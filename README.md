@@ -23,7 +23,7 @@
 
 
 ## 🛠 Tech Stack
-* **Language:** Java 20+
+* **Language:** Java 21
 * **Framework:** Spring Boot 3.x
 * **Database (local):** PostgreSQL, Supabase (only for storage profiles and services pictures)
 * **Database (prod):** Supabase
@@ -36,7 +36,7 @@
 This section explains how to run the Slotify Backend project locally.  
 
 ### ✅ Prerequisites  
-- Java 17 or later  
+- Java 21 
 - Maven (or use your IDE’s built-in Maven support)  
 - PostgreSQL (recommended for production)  
 - (optional) H2 Database (used for testing or local development)  
@@ -45,11 +45,6 @@ This section explains how to run the Slotify Backend project locally.
 ---
 
 ## 🚀 Getting Started
-
-### ✅ Prerequisites
-- Java 20
-- Maven installed
-- PostgreSQL (local instance or Docker container)
 
 ### 1️⃣ Database Setup
 Log in to your PostgreSQL console and execute:
@@ -135,7 +130,7 @@ docker compose up --build
 ---
 
 ## 🛠 API Documentation & Health Monitoring
-## 🔹 Swagger UI
+### 🔹 Swagger UI
 After backend running you can interactive API documentation via Swagger:  
 - Public URL: https://slotify-xk6n7.ondigitalocean.app/swagger-ui/index.html#/
 - Local URL: http://localhost:8080/swagger-ui/index.html  
