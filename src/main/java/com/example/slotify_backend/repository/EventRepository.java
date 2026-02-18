@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface EventRepository extends JpaRepository<Event, Long> {
@@ -20,4 +21,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByVacation(Vacation vacation);
     List<Event> findAllByUserIdAndStartDateBetweenAndBookingStatus(Long userId, LocalDateTime startDate,LocalDateTime endDate, BookingStatus bookingStatus);
     List<Event> findAllByClientIdAndUserId(Long clientId, Long userId);
+
+    Optional<Event> findByReservationToken(String reservationToken);
+
+    List<Event> findAllByBookingStatusAndTokenExpiryDateBefore(BookingStatus bookingStatus, LocalDateTime tokenExpiryDateBefore);
 }
