@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 public record PreOrderResponseDTO(
         @NotNull
+        Long userId,
+        @NotNull
         Long serviceId,
         @NotNull
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

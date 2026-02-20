@@ -1,16 +1,54 @@
 package com.example.slotify_backend.controller;
 
 import com.example.slotify_backend.dto.ErrorResponse;
+import com.example.slotify_backend.exception.EventAlreadyBookedException;
+import com.example.slotify_backend.exception.EventNotFoundException;
 import com.example.slotify_backend.exception.ResourceNotFoundException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import com.example.slotify_backend.exception.TokenExpiredException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+    @ExceptionHandler(EventAlreadyBookedException.class)
+    public ResponseEntity<ErrorResponse> handleEventAlreadyBooked(EventAlreadyBookedException ex,
+                                                                  HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ErrorResponse> handleTokenExpired(TokenExpiredException ex,
+                                                            HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.GONE.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(error, HttpStatus.GONE);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEventNotFound(EventNotFoundException ex,
+                                                             HttpServletRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex,
