@@ -59,7 +59,7 @@ class BusinessOrderServiceTest {
     private ClientRepository clientRepository;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp(){
         eventRepository.deleteAll();
         serviceRepository.deleteAll();
         userRepository.deleteAll();
