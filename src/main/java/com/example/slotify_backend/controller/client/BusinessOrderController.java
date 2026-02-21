@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor
-public class BussinessOrderController {
+public class BusinessOrderController {
     private final BusinessOrderService businessOrderService;
 
     @GetMapping("{id}")
@@ -38,8 +38,8 @@ public class BussinessOrderController {
         businessOrderService.insertOrder(orderDTO);
     }
 
-    @GetMapping("/booked/{userId}/{chosenDay}")
-    public List<BookedHoursEventDTO> getBookedHoursEvents( @PathVariable("userId") Long userId, @PathVariable("chosenDay") LocalDateTime chosenDay){
-       return businessOrderService.getBookedHoursEvents(userId,chosenDay);
+    @GetMapping("/booked/{serviceId}/{chosenDay}")
+    public List<BookedHoursEventDTO> getBookedHoursEvents( @PathVariable("serviceId") Long serviceId, @PathVariable("chosenDay") LocalDateTime chosenDay){
+       return businessOrderService.getBookedHoursEvents(serviceId,chosenDay);
     }
 }

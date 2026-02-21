@@ -22,7 +22,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByClientId(Long clientId);
     List<Event> findAllByUserIdAndBookingStatusNot(Long userId, BookingStatus bookingStatus);
     List<Event> findAllByVacation(Vacation vacation);
-    List<Event> findAllByUserIdAndStartDateBetweenAndBookingStatus(Long userId, LocalDateTime startDate,LocalDateTime endDate, BookingStatus bookingStatus);
     List<Event> findAllByClientIdAndUserId(Long clientId, Long userId);
 
     Optional<Event> findByReservationToken(String reservationToken);

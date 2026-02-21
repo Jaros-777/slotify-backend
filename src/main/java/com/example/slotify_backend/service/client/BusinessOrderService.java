@@ -44,7 +44,7 @@ public class BusinessOrderService {
 
         ServiceEntity service = serviceRepository.findById(orderDTO.serviceId()).orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
-        User user = userRepository.findByIdWithPessimisticLock(orderDTO.userId())
+        User user = userRepository.findByIdWithPessimisticLock(service.getUser().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 
@@ -80,9 +80,6 @@ public class BusinessOrderService {
             throw new TokenExpiredException("Token expired");
         }
 
-        //This function must be here, because @Schedule will cost to more for server who has only 512MB of ram.
-        eventRepository.deleteExpiredEvents(BookingStatus.PENDING, LocalDateTime.now());
-
         Client client = clientRepository.findByEmail(orderDTO.email());
         if (client == null) {
             client = new Client();
@@ -109,19 +106,18 @@ public class BusinessOrderService {
         notificationRepository.save(notification);
     }
 
-    public List<BookedHoursEventDTO> getBookedHoursEvents(Long userId, LocalDateTime chosenDay) {
+    public List<BookedHoursEventDTO> getBookedHoursEvents(Long serviceId, LocalDateTime chosenDay) {
         LocalDateTime startOfDay = chosenDay.withHour(0).withMinute(0).withSecond(0);
         LocalDateTime endOfDay = chosenDay.withHour(23).withMinute(59).withSecond(59);
+        ServiceEntity service= serviceRepository.findById(serviceId).orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+        Long userId = service.getUser().getId();
 
-        List<Event> bookedEvents = eventRepository.findAllByUserIdAndStartDateBetween(userId, startOfDay, endOfDay);
-        List<Event> vacations = eventRepository.findAllByUserIdAndStartDateBetweenAndBookingStatus(userId, startOfDay, endOfDay, BookingStatus.VACATION);
+
+        List<Event> bookedEventsAndVacations = eventRepository.findAllByUserIdAndStartDateBetween(userId, startOfDay, endOfDay);
         List<BookedHoursEventDTO> bookedHoursEvents = new ArrayList<>();
 
-        bookedEvents.forEach(event ->
+        bookedEventsAndVacations.forEach(event ->
                 bookedHoursEvents.add(new BookedHoursEventDTO(event.getStartDate(), event.getEndDate()))
-        );
-        vacations.forEach(vacation ->
-                bookedHoursEvents.add(new BookedHoursEventDTO(vacation.getStartDate(), vacation.getEndDate()))
         );
 
 

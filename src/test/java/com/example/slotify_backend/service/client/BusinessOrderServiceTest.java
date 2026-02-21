@@ -101,7 +101,6 @@ class BusinessOrderServiceTest {
         LocalDateTime date = LocalDateTime.of(2026, 1, 1, 9, 0);
 
         PreOrderResponseDTO responseDTO = new PreOrderResponseDTO(
-                user.getId(),
                 serviceEntity.getId(),
                 date
         );
@@ -158,13 +157,11 @@ class BusinessOrderServiceTest {
         LocalDateTime date = LocalDateTime.of(2026, 1, 1, 9, 0);
 
         PreOrderResponseDTO responseDTO1 = new PreOrderResponseDTO(
-                user.getId(),
                 serviceEntity.getId(),
                 date
         );
         String requestBody1 = objectMapper.writeValueAsString(responseDTO1);
         PreOrderResponseDTO responseDTO2 = new PreOrderResponseDTO(
-                user.getId(),
                 serviceEntity.getId(),
                 date
         );
@@ -235,7 +232,6 @@ class BusinessOrderServiceTest {
 
 
         PreOrderResponseDTO responseDTO = new PreOrderResponseDTO(
-                user.getId(),
                 serviceEntity.getId(),
                 chosenDate
         );
@@ -255,7 +251,6 @@ class BusinessOrderServiceTest {
         LocalDateTime date = LocalDateTime.of(2026, 1, 1, 9, 0);
 
         PreOrderResponseDTO responseDTO = new PreOrderResponseDTO(
-                user.getId(),
                 serviceEntity.getId(),
                 date
         );

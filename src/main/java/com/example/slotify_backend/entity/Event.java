@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "events")
+@Table(name = "events", indexes = {
+        @Index(name = "idx_event_status_expiry", columnList = "bookingStatus, tokenExpiryDate")
+})
 @AllArgsConstructor
 public class Event {
     @Id
