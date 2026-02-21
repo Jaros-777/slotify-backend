@@ -3,7 +3,8 @@ package com.example.slotify_backend.controller.client;
 import com.example.slotify_backend.dto.client.BookedHoursEventDTO;
 import com.example.slotify_backend.dto.client.OrderDTO;
 import com.example.slotify_backend.dto.client.OrderResponseDTO;
-import com.example.slotify_backend.service.client.BussinessOrderService;
+import com.example.slotify_backend.dto.client.PreOrderResponseDTO;
+import com.example.slotify_backend.service.client.BusinessOrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,22 +18,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @AllArgsConstructor
-public class BussinessOrderController {
-    private final BussinessOrderService bussinessOrderService;
+public class BusinessOrderController {
+    private final BusinessOrderService businessOrderService;
 
     @GetMapping("{id}")
     public OrderDTO getAllServicesByUser(@PathVariable("id") Long serviceId){
-        return bussinessOrderService.getAllDetailsByServiceId(serviceId);
+        return businessOrderService.getAllDetailsByServiceId(serviceId);
+    }
+
+    @PostMapping("/pre")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String preOrder( @Valid @RequestBody PreOrderResponseDTO orderDTO) {
+        return businessOrderService.preOrder(orderDTO);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void insertOrder( @Valid @RequestBody OrderResponseDTO orderDTO) {
-        bussinessOrderService.insertOrder(orderDTO);
+        businessOrderService.insertOrder(orderDTO);
     }
 
     @GetMapping("/booked/{serviceId}/{chosenDay}")
     public List<BookedHoursEventDTO> getBookedHoursEvents( @PathVariable("serviceId") Long serviceId, @PathVariable("chosenDay") LocalDateTime chosenDay){
-       return bussinessOrderService.getBookedHoursEvents(serviceId,chosenDay);
+       return businessOrderService.getBookedHoursEvents(serviceId,chosenDay);
     }
 }

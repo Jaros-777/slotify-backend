@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "events")
+@Table(name = "events", indexes = {
+        @Index(name = "idx_event_status_expiry", columnList = "bookingStatus, tokenExpiryDate")
+})
 @AllArgsConstructor
 public class Event {
     @Id
@@ -40,6 +42,10 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacation_id")
     private Vacation vacation;
+    @Column(unique = true)
+    private String reservationToken;
+    private LocalDateTime tokenExpiryDate;
+
 
     public Event(User user, Client client, ServiceEntity serviceEntity, LocalDateTime startDate, LocalDateTime endDate, BookingStatus bookingStatus, String description) {
         this.user = user;
@@ -59,6 +65,7 @@ public class Event {
         this.bookingStatus = bookingStatus;
         this.vacation = vacation;
     }
+
 }
 
 
