@@ -34,7 +34,7 @@ public class BusinessPageService {
 
          BusinessProfileWithAddressDTO businessProfileDTO = businessProfileMapper.toDTO(businessProfile);
 
-         List<ServiceEntity> services = serviceRepository.findAllByUserId(businessProfile.getUser().getId());
+         List<ServiceEntity> services = serviceRepository.findAllByUserIdAndIsEditable(businessProfile.getUser().getId(), true);
          List<ServiceDTO> serviceDto = serviceMapper.toDTO(services);
          List<AvailabilityDTO> availabilityDTO =availabilityMapper.toDTO(availabiltyRepository.findAllByUserId(businessProfile.getUser().getId()));
 
