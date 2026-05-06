@@ -132,7 +132,7 @@ docker compose up --build
 ## 🛠 API Documentation & Health Monitoring
 ### 🔹 Swagger UI
 After backend running you can interactive API documentation via Swagger:  
-- Public URL: https://slotify-xk6n7.ondigitalocean.app/swagger-ui/index.html#/
+- Public URL: https://slotify-c8g4c9egffckggcf.polandcentral-01.azurewebsites.net/swagger-ui/index.html#/
 - Local URL: http://localhost:8080/swagger-ui/index.html  
 - You can view all available endpoints, their request/response models, and try requests directly from the browser.  
 <img width="1898" height="907" alt="image" src="https://github.com/user-attachments/assets/317ba305-df86-4d81-8bf3-ab8e2c7c6f3e" />
@@ -140,7 +140,7 @@ After backend running you can interactive API documentation via Swagger:
 
 ### 🔹 Spring Boot Actuator – Health Endpoint
 The application provides a health monitoring endpoint using Spring Boot Actuator: 
-- Public URL: https://slotify-xk6n7.ondigitalocean.app/actuator/health
+- Public URL: https://slotify-c8g4c9egffckggcf.polandcentral-01.azurewebsites.net/actuator/health
 - Local URL: http://localhost:8080/actuator/health  
 - Example response:  
 ```
